@@ -13,6 +13,15 @@
  */
 package me.shangyh.codelab.nio;
 
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
+
 /**
  *
  * TODO BufferTest说明
@@ -27,6 +36,43 @@ public class BufferTest {
         short[] shorts = {1, 2, 3, 4};
         int[] ints = {1, 2, 3, 4, 5};
         float[] floats = {1, 2, 3, 4, 5, 6};
-        long[] 
+        long[] longs = {1, 2, 3, 4, 5, 6, 7};
+        double[] doubles = {1, 2, 3, 4, 5, 6, 7, 8};
+        char[] chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
+
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        ShortBuffer shortBuffer = ShortBuffer.wrap(shorts);
+        IntBuffer intBuffer = IntBuffer.wrap(ints);
+        FloatBuffer floatBuffer = FloatBuffer.wrap(floats);
+        LongBuffer longBuffer = LongBuffer.wrap(longs);
+        DoubleBuffer doubleBuffer = DoubleBuffer.wrap(doubles);
+        CharBuffer charBuffer = CharBuffer.wrap(chars);
+
+        printClsName(byteBuffer);
+        printClsName(shortBuffer);
+        printClsName(intBuffer);
+        printClsName(floatBuffer);
+        printClsName(longBuffer);
+        printClsName(doubleBuffer);
+        printClsName(charBuffer);
+
+        System.out.println();
+
+        printCapacity("byteBuffer", byteBuffer);
+        printCapacity("shortBuffer", shortBuffer);
+        printCapacity("intBuffer", intBuffer);
+        printCapacity("floatBuffer", floatBuffer);
+        printCapacity("longBuffer", longBuffer);
+        printCapacity("doubleBuffer", doubleBuffer);
+        printCapacity("charBuffer", charBuffer);
+        
+    }
+
+    static void printClsName(Object obj) {
+        System.out.println(obj.getClass().getName());
+    }
+    
+    static void printCapacity(String prefix,Buffer buffer){
+        System.out.println(prefix+".capacity="+buffer.capacity());
     }
 }
