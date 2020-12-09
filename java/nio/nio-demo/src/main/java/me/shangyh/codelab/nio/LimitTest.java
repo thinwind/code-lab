@@ -37,13 +37,20 @@ public class LimitTest {
         charBuffer.put(0, '0');
         charBuffer.put(1, '1');
         charBuffer.put(2, '2');
-        //java.lang.IndexOutOfBoundsException
+        
+        // java.lang.IndexOutOfBoundsException
         // charBuffer.put(3, '3');
         // charBuffer.put(4, '4');
         // charBuffer.put(5, '5');
         // charBuffer.put(6, '6');
         
-        //java.lang.IndexOutOfBoundsException
+        // java.lang.IndexOutOfBoundsException
         // charBuffer.charAt(3);
+        
+        // java.lang.IllegalArgumentException: newLimit > capacity: (8 > 7)
+        // charBuffer.limit(chars.length+1);
+        
+        // starts from 0
+        // charBuffer.limit(0);
     }
 }
