@@ -32,6 +32,7 @@ import java.nio.ShortBuffer;
  */
 public class BufferTest {
     public static void main(String[] args) {
+        
         byte[] bytes = {1, 2, 3};
         short[] shorts = {1, 2, 3, 4};
         int[] ints = {1, 2, 3, 4, 5};
@@ -75,4 +76,5 @@ public class BufferTest {
     static void printCapacity(String prefix,Buffer buffer){
         System.out.println(prefix+".capacity="+buffer.capacity());
     }
+    
 }
