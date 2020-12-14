@@ -15,6 +15,8 @@
  */
 package me.shangyh.codelab.nio;
 
+import java.nio.ByteBuffer;
+
 /**
  *
  * TODO HeapGCTest说明
@@ -23,6 +25,18 @@ package me.shangyh.codelab.nio;
  * @since 2020-11-04  17:39
  *
  */
-public class HeapGCTest {
-    
+public class JvmGCTest {
+    public static void main(String[] args) throws InterruptedException {
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(Integer.MAX_VALUE);
+        byte[] filling = {1};
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            byteBuffer.put(filling);
+        }
+
+        System.out.println("put ended.");
+        Thread.sleep(5000);
+        System.out.println("after 5 secs");
+        Thread.sleep(20000);
+        System.out.println("exiting...");
+    }
 }
