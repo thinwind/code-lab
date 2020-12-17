@@ -13,32 +13,33 @@
  */
 package me.shangyh.codelab.nio.channel;
 
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
  *
- * TODO FileChannelTest说明
+ * TODO FileChannelReadPosTest说明
  *
  * @author Shang Yehua <niceshang@outlook.com>
- * @since 2020-11-02  19:13
+ * @since 2020-11-03  14:18
  *
  */
-public class FileChannelTest {
+public class FileChannelReadPosTest {
     public static void main(String[] args) throws IOException {
-        FileOutputStream fos = new FileOutputStream("c:\\tmp\\a.txt",true);
-        FileChannel fileChannel = fos.getChannel();
-        ByteBuffer buffer1 = ByteBuffer.wrap("abcde".getBytes("UTF-8"));
-        ByteBuffer buffer2 = ByteBuffer.wrap("01234".getBytes("UTF-8"));
-        fileChannel.write(buffer1);
-        fileChannel.position(2);
-        System.out.println("filechannel pos="+fileChannel.position());
-        buffer2.position(1);
-        buffer2.limit(3);
-        fileChannel.write(buffer2,2);
-        fileChannel.close();
-        fos.close();
+        FileInputStream fis = new FileInputStream("c:\\tmp\\c.txt");
+        FileChannel channel = fis.getChannel();
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(3);
+        long length = channel.read(byteBuffer, 1);
+        System.out.println(length);
+        
+        byteBuffer.clear();
+        length = channel.read(byteBuffer, 5);
+        System.out.println(length);
+        
+        channel.close();
+        fis.close();
     }
 }
