@@ -1,9 +1,3 @@
-package me.shangyh.codelab.nio.channel;
-
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.channels.FileChannel;
-
 /*
  * Copyright 2020 Shang Yehua
  * 
@@ -17,25 +11,27 @@ import java.nio.channels.FileChannel;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+package me.shangyh.codelab.nio.channel;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
 /**
  *
- * TODO FileLock说明
+ * TODO FileTest说明
  *
  * @author Shang Yehua <niceshang@outlook.com>
- * @since 2020-11-04  17:34
+ * @since 2020-11-00  16:06
  *
  */
-public class FileLockTest {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        RandomAccessFile raf = new RandomAccessFile("c:\\tmp\\a.txt", "rw");
-        FileChannel channel = raf.getChannel();
-        
-        System.out.println("A start to lock...");
-        channel.lock(1,2,false);
-        System.out.println("A lock success");
-        Thread.sleep(Integer.MAX_VALUE);
-        
+public class FileTest {
+    public static void main(String[] args) throws IOException {
+        File none = new File("c:\\tmp\\none.txt");
+        Path path = none.toPath();
+        FileChannel channel = FileChannel.open(path, StandardOpenOption.CREATE,StandardOpenOption.WRITE);
         channel.close();
-        raf.close();
     }
 }
