@@ -13,9 +13,12 @@
  */
 package me.shangyh.codelab.nio.selector;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -35,6 +38,8 @@ public class TransferToTestClient {
         channel.connect(new InetSocketAddress("localhost", 19099));
         var selector = Selector.open();
         channel.register(selector, SelectionKey.OP_CONNECT);
+        var pdfFile = new RandomAccessFile("c:\\tmp\\test.pdf", "rw");
+        var pdf = pdfFile.getChannel();
         var isRunning = true;
         while (isRunning) {
             System.out.println("begin selector");
@@ -52,18 +57,18 @@ public class TransferToTestClient {
                         channel.register(selector, SelectionKey.OP_READ);
                     }
                     if (key.isReadable()) {
-                        ByteBuffer byteBuffer = ByteBuffer.allocate(5000);
+                        ByteBuffer byteBuffer = ByteBuffer.allocate(50000);
                         int readLength = channel.read(byteBuffer);
-                        byteBuffer.flip();
-                        var count = 0;
                         while(readLength != -1){
-                            count += readLength;
-                            readLength = channel.read(byteBuffer);
-                            System.out.println("count="+count+" readLength="+readLength);
+                            byteBuffer.flip();
+                            pdf.write(byteBuffer);
                             byteBuffer.clear();
+                            readLength = channel.read(byteBuffer);
                         }
                         System.out.println("读取结束");
                         channel.close();
+                        pdf.close();
+                        pdfFile.close();
                     }
                 }
             } else {

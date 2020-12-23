@@ -58,7 +58,11 @@ public class TransferToTestServer {
                             "rw");
                     System.out.println("file length=" + file.length());
                     FileChannel fileChannel = file.getChannel();
-                    fileChannel.transferTo(0, file.length(), socketChannel);
+                    long fileSize = file.length();
+                    long transfered = fileChannel.transferTo(0, file.length(), socketChannel);
+                    while(transfered<fileSize){
+                        transfered+=fileChannel.transferTo(transfered, fileSize-transfered, fileChannel);
+                    }
                     fileChannel.close();
                     file.close();
                     socketChannel.close();
