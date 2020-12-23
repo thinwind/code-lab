@@ -57,21 +57,32 @@ public class TransferToTestServer {
                 }
                 if (key.isWritable()) {
                     SocketChannel socketChannel2 = (SocketChannel) key.channel();
-                    FileInputStream file =
-                            new FileInputStream("C:\\Users\\Shangyh\\BookLib\\cobol\\test.pdf");
+                    var file = new RandomAccessFile("C:\\Users\\Shangyh\\BookLib\\cobol\\test.pdf",
+                            "r");
                     FileChannel fileChannel = file.getChannel();
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(100000);
-                    while (fileChannel.position() < fileChannel.size()) {
-                        fileChannel.read(byteBuffer);
-                        byteBuffer.flip();
-                        while (byteBuffer.hasRemaining()) {
-                            socketChannel2.write(byteBuffer);
-                        }
-                        byteBuffer.clear();
+                    // ByteBuffer byteBuffer = ByteBuffer.allocate(100000);
+
+                    var fileSize = file.length();
+                    long size = fileChannel.transferTo(0, fileSize, socketChannel2);
+                    long transfered = size;
+                    while(transfered < fileSize){
+                        size = fileChannel.transferTo(transfered, fileSize-transfered, socketChannel2);
+                        transfered += size;
                     }
+
+                    // while (fileChannel.position() < fileChannel.size()) {
+                    //     fileChannel.read(byteBuffer);
+                    //     byteBuffer.flip();
+                    //     while (byteBuffer.hasRemaining()) {
+                    //         socketChannel2.write(byteBuffer);
+                    //     }
+                    //     byteBuffer.clear();
+                    // }
                     System.out.println("结束写操作");
                     socketChannel.close();
+                    fileChannel.close();
                     file.close();
+                    socketChannel2.close();
                     // var file = new RandomAccessFile("C:\\Users\\Shangyh\\BookLib\\cobol\\test.pdf",
                     //         "rw");
                     // System.out.println("file length=" + file.length());
