@@ -16,7 +16,6 @@ package me.shangyh.codelab.nio.selector;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -54,19 +53,22 @@ public class TransferToTestClient {
                         }
                         channel.register(selector, SelectionKey.OP_READ);
                     }
-                    if (key.isReadable()) {
-                        ByteBuffer byteBuffer = ByteBuffer.allocate(50000);
-                        int readLength = channel.read(byteBuffer);
-                        while(readLength != -1){
-                            byteBuffer.flip();
-                            pdf.write(byteBuffer);
-                            byteBuffer.clear();
-                            readLength = channel.read(byteBuffer);
-                        }
+                    if (key.isReadable()){
+                        // ByteBuffer byteBuffer = ByteBuffer.allocate(50000);
+                        // int readLength = channel.read(byteBuffer);
+                        // while(readLength != -1){
+                        //     byteBuffer.flip();
+                        //     pdf.write(byteBuffer);
+                        //     byteBuffer.clear();
+                        //     readLength = channel.read(byteBuffer);
+                        // }
+                        SocketChannel socketChannel = (SocketChannel) key.channel();
+                        pdf.transferFrom(socketChannel, 0,Integer.MAX_VALUE);
                         System.out.println("读取结束");
+                        socketChannel.close();
                         channel.close();
                         pdf.close();
-                        pdfFile.close();
+                        pdfFile.close();   
                     }
                 }
             } else {
