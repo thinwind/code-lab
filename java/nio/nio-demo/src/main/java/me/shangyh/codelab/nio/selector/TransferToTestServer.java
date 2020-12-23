@@ -13,9 +13,11 @@
  */
 package me.shangyh.codelab.nio.selector;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -54,19 +56,35 @@ public class TransferToTestServer {
                     socketChannel.register(selector, SelectionKey.OP_WRITE);
                 }
                 if (key.isWritable()) {
-                    var file = new RandomAccessFile("C:\\Users\\Shangyh\\BookLib\\cobol\\test.pdf",
-                            "rw");
-                    System.out.println("file length=" + file.length());
+                    SocketChannel socketChannel2 = (SocketChannel) key.channel();
+                    FileInputStream file =
+                            new FileInputStream("C:\\Users\\Shangyh\\BookLib\\cobol\\test.pdf");
                     FileChannel fileChannel = file.getChannel();
-                    long fileSize = file.length();
-                    long transfered = fileChannel.transferTo(0, file.length(), socketChannel);
-                    while(transfered<fileSize){
-                        transfered+=fileChannel.transferTo(transfered, fileSize-transfered, fileChannel);
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(100000);
+                    while (fileChannel.position() < fileChannel.size()) {
+                        fileChannel.read(byteBuffer);
+                        byteBuffer.flip();
+                        while (byteBuffer.hasRemaining()) {
+                            socketChannel2.write(byteBuffer);
+                        }
+                        byteBuffer.clear();
                     }
-                    fileChannel.close();
-                    file.close();
+                    System.out.println("结束写操作");
                     socketChannel.close();
-                    isRunning = false;
+                    file.close();
+                    // var file = new RandomAccessFile("C:\\Users\\Shangyh\\BookLib\\cobol\\test.pdf",
+                    //         "rw");
+                    // System.out.println("file length=" + file.length());
+                    // FileChannel fileChannel = file.getChannel();
+                    // long fileSize = file.length();
+                    // long transfered = fileChannel.transferTo(0, file.length(), socketChannel);
+                    // while(transfered<fileSize){
+                    //     transfered+=fileChannel.transferTo(transfered, fileSize-transfered, fileChannel);
+                    // }
+                    // fileChannel.close();
+                    // file.close();
+                    // socketChannel.close();
+                    // isRunning = false;
                 }
             }
         }
