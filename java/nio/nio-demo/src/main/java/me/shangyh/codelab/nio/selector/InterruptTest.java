@@ -15,6 +15,8 @@ package me.shangyh.codelab.nio.selector;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -32,11 +34,45 @@ public class InterruptTest {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.bind(new InetSocketAddress("localhost", 9909));
         serverSocketChannel.configureBlocking(false);
+        var mainThread = Thread.currentThread();
 
         Selector selector = Selector.open();
         SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-        var thread = new Thread(){
-             
+        var thread = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    mainThread.interrupt();                    
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                
+            }
         };
+        thread.start();
+        
+        var isRunning = true;
+        while(isRunning){
+            System.out.println("begin: "+System.currentTimeMillis());
+            int keyCount = selector.select();
+            mainThread.interrupted();
+            System.out.println("  end: "+System.currentTimeMillis()+" keyCount="+keyCount);
+            var keys = selector.keys();
+            var selectedKeys = selector.selectedKeys();
+            var iterator = selectedKeys.iterator();
+            while(iterator.hasNext()){
+                SelectionKey key = iterator.next();
+                iterator.remove();
+                if(key.isAcceptable()){
+                    ServerSocketChannel serverChanel = (ServerSocketChannel) key.channel();
+                    ServerSocket serverSocket = serverChanel.socket();
+                    Socket socket = serverSocket.accept();
+                    socket.close();
+                }
+            }
+        }
+        serverSocketChannel.close();
     }
 }
