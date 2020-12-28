@@ -6,3 +6,4 @@ codelab.code-workspace
 .apt_generated/
 .factorypath
 .vscode/
+.venv/
