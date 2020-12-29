@@ -31,21 +31,15 @@ def rm_mac_files(dir):
     parent_path = os.path.abspath(dir)
     for sub in subs:
         sub_path = parent_path+"/"+sub
-        if sub.startswith('.'):
-            if sub.startswith(".git"):
-                # shutil.rmtree(sub_path)
-                print("git://"+sub_path)
-                # .git dir
-                pass
-            else:
-                if os.path.isdir(sub_path):
-                    shutil.rmtree(sub_path)
-                else :
-                    os.remove(sub_path)
+        if sub.startswith('._'):
+            if os.path.isdir(sub_path):
+                shutil.rmtree(sub_path)
+            else :
+                os.remove(sub_path)
                 # print(sub_path)
         else:
             if os.path.isdir(sub_path):
                 rm_mac_files(sub_path)
 
 if __name__ == "__main__":
-    print_dir(base_path)
+    rm_mac_files(base_path)
