@@ -16,12 +16,12 @@
  */
 package org.apache.rocketmq.example.ordermessage;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.UUID;
+import java.io.UnsupportedEncodingException;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.MQProducer;
 import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
@@ -32,19 +32,26 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 public class Producer {
     public static void main(String[] args) throws UnsupportedEncodingException {
         try {
-            MQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+            DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+            producer.buildMQClientId();
+            producer.setNamesrvAddr("localhost:9876");
+            
             producer.start();
+            String uuid=UUID.randomUUID().toString();
+            int uuidLength= uuid.length();
 
             String[] tags = new String[] {"TagA", "TagB", "TagC", "TagD", "TagE"};
             for (int i = 0; i < 100; i++) {
-                int orderId = i % 10;
+                String orderId = i + uuid;
                 Message msg =
                     new Message("TopicTestjjj", tags[i % tags.length], "KEY" + i,
                         ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
                 SendResult sendResult = producer.send(msg, new MessageQueueSelector() {
                     @Override
                     public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-                        Integer id = (Integer) arg;
+                        String msgId = (String) arg;
+                        System.out.println("arg:"+msgId);
+                        Integer id = Integer.parseInt(msgId.substring(0,msgId.length()-uuidLength));
                         int index = id % mqs.size();
                         return mqs.get(index);
                     }
