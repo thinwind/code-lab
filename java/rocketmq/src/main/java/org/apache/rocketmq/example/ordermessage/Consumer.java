@@ -40,7 +40,8 @@ public class Consumer {
             @Override
             public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
                 context.setAutoCommit(true);
-                System.out.printf("%s Receive New Messages: %d %n", Thread.currentThread().getName(),msgs.size());
+                System.out.printf("%s Receive New Messages: %d %s %n", Thread.currentThread().getName(),
+                        msgs.size(),context.getMessageQueue().getQueueId());
                 this.consumeTimes.incrementAndGet();
                 for(MessageExt msg:msgs){
                     System.out.println("queueId="+msg.getQueueId()+",content="+new String(msg.getBody()));
