@@ -1,2 +1,12 @@
 GET /polls/ HTTP/1.1
 Host: localhost:8000
+
+###
+
+GET https://m1731beca9c8f0620.wxvote.pingxuan123.com/page/show/id/91e3de94e1892a1b.html HTTP/1.1
+
+### 
+POST https://yulan.youtoupiao.com/page/votedsf/id/91e3de94e1892a1b/v/2.html HTTP/1.1
+content-type: application/x-www-form-urlencoded; charset=UTF-8
+
+iid=93158d397f01782d&cookieEnabled=false&language=zh-CN
