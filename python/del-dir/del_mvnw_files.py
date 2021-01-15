@@ -41,4 +41,4 @@ def rm_mvnw_files(dir):
             
 
 if __name__ == "__main__":
-    rm_mvnw_files(base_path)
+    print_dir(base_path)
