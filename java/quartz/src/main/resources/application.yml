@@ -9,4 +9,15 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: false
-    
+
+  quartz:
+    job-store-type: jdbc # this make quartz use application's datasource
+    # jdbc:
+      # schema: "classpath:org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql"
+      # initialize-schema: embedded
+    properties:
+      '[org.quartz.jobStore.driverDelegateClass]': "org.quartz.impl.jdbcjobstore.StdJDBCDelegate"
+      '[org.quartz.jobStore.isClustered]': true
+      '[org.quartz.jobStore.class]': "org.quartz.impl.jdbcjobstore.JobStoreTX"
+      '[org.quartz.jobStore.tablePrefix]': QRTZ_
+      
