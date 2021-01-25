@@ -13,8 +13,12 @@
  */
 package win.shangyh.codelab.quartz.raw;
 
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.Trigger;
 
@@ -26,8 +30,8 @@ import org.quartz.Trigger;
  * @since 2021-00-05  19:08
  *
  */
-public class Tutorial1 {
-  public static void main(String[] args) {
+public class Tutorial0 {
+  public static void main(String[] args) throws SchedulerException {
 
     SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
 
@@ -36,7 +40,7 @@ public class Tutorial1 {
     sched.start();
 
     // define the job and tie it to our HelloJob class
-    JobDetail job = newJob(HelloJob.class).withIdentity("myJob", "group1").build();
+    JobDetail job = newJob(HelloJob2.class).withIdentity("myJob", "group1").build();
 
     // Trigger the job to run now, and then every 40 seconds
     Trigger trigger = newTrigger().withIdentity("myTrigger", "group1").startNow()
