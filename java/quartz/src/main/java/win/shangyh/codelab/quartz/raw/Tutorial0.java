@@ -30,23 +30,23 @@ import org.quartz.Trigger;
  * @since 2021-00-05  19:08
  *
  */
-public class Tutorial1 {
-    public static void main(String[] args) throws SchedulerException {
+public class Tutorial0 {
+  public static void main(String[] args) throws SchedulerException {
 
-        SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+    SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
 
-        Scheduler sched = schedFact.getScheduler();
+    Scheduler sched = schedFact.getScheduler();
 
-        sched.start();
+    sched.start();
 
-        // define the job and tie it to our HelloJob class
-        JobDetail job = newJob(HelloJob.class).withIdentity("myJob", "group1").build();
+    // define the job and tie it to our HelloJob class
+    JobDetail job = newJob(HelloJob2.class).withIdentity("myJob", "group1").build();
 
-        // Trigger the job to run now, and then every 40 seconds
-        Trigger trigger = newTrigger().withIdentity("myTrigger", "group1").startNow()
-                .withSchedule(simpleSchedule().withIntervalInSeconds(40).repeatForever()).build();
+    // Trigger the job to run now, and then every 40 seconds
+    Trigger trigger = newTrigger().withIdentity("myTrigger", "group1").startNow()
+        .withSchedule(simpleSchedule().withIntervalInSeconds(40).repeatForever()).build();
 
-        // Tell quartz to schedule the job using our trigger
-        sched.scheduleJob(job, trigger);
-    }
+    // Tell quartz to schedule the job using our trigger
+    sched.scheduleJob(job, trigger);
+  }
 }
