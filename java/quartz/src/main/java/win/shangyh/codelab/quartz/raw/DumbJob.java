@@ -13,6 +13,10 @@
  */
 package win.shangyh.codelab.quartz.raw;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.text.SimpleDateFormat;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -34,11 +38,22 @@ public class DumbJob implements Job {
 
   public void execute(JobExecutionContext context) throws JobExecutionException {
     JobKey key = context.getJobDetail().getKey();
-
-    JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+    System.out.println("CONTeXT HASHCODE ========>> "+context.hashCode());
+    JobDataMap dataMap = context.getMergedJobDataMap();
 
     String jobSays = dataMap.getString("jobSays");
     float myFloatValue = dataMap.getFloat("myFloatValue");
+    List<Date> state = (List<Date>) dataMap.get("myStateDatate");
+    if (state == null) {
+      state = new ArrayList<Date>();
+      dataMap.put("state", state);
+    }
+    state.add(new Date());
+    
+    System.out.println("JOB HASHCODE ========>> "+this.hashCode());
+    for (int i = 0; i < state.size(); i++) {
+      System.out.println("||===========>>"+i+"\t"+new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(state.get(i)));
+    }
 
     System.err.println(
         "Instance " + key + " of DumbJob says: " + jobSays + ", and val is: " + myFloatValue);

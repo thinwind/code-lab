@@ -41,10 +41,13 @@ public class Tutorial2 {
 
     // define the job and tie it to our HelloJob class
     JobDetail job = newJob(DumbJob.class).usingJobData("jobSays", "Hello World!")
-        .usingJobData("myFloatValue", 3.141f).withIdentity("dumpJob", "group1").build();
+        .usingJobData("myFloatValue", 3.141f)
+        .withIdentity("dumpJob", "group1").build();
 
     // Trigger the job to run now, and then every 40 seconds
-    Trigger trigger = newTrigger().withIdentity("dumpTrigger", "group1").startNow()
+    Trigger trigger = newTrigger()
+        .usingJobData("jobSays", "Hello from trigger")
+        .withIdentity("dumpTrigger", "group1").startNow()
         .withSchedule(simpleSchedule().withIntervalInSeconds(10).repeatForever()).build();
 
     // Tell quartz to schedule the job using our trigger
