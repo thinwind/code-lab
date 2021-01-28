@@ -1,0 +1,9 @@
+{
+  "templateName": "template1",
+  "sourceType": "file",
+  "sourceName": "input-data",
+  "fields": [
+    {"fieldName": "id", "fileLocation": 1},
+    {"fieldName": "name", "fileLocation": 2}
+  ]
+}

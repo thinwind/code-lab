@@ -1,0 +1,22 @@
+{
+  "templateFileName": "xxx.txt",
+  "title": "测试报表",
+  "details": [
+    {
+      "fieldName": "id",
+      "sourceTemplate": "template1",
+      "sourceFieldName": "id",
+      "displayName": "ID",
+      "length": 8,
+      "align": "left"
+    },
+    {
+      "fieldName": "name",
+      "sourceTemplate": "template1",
+      "sourceFieldName": "name",
+      "displayName": "姓名",
+      "length": 6,
+      "align": "right"
+    }
+  ]
+}

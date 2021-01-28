@@ -1,0 +1,10 @@
+{
+  "templateName": "template2",
+  "sourceType": "file",
+  "sourceName": "input-data2",
+  "fields": [
+    {"fieldName": "id", "fileLocation": 1},
+    {"fieldName": "name", "fileLocation": 2},
+    {"fieldName": "phone", "fileLocation": 3}
+  ]
+}
