@@ -1,15 +1,20 @@
-package com.study.batch_demo;
+package com.study.batch_demo.muses;
 
-import com.study.batch_demo.entity.Test;
+import java.util.List;
+import java.io.IOException;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.util.IOUtils;
 import com.study.batch_demo.mapper.DynamicFieldSetMapper;
-import com.study.batch_demo.mapper.TestFieldSetMapper;
 import com.study.batch_demo.param.InputField;
 import com.study.batch_demo.param.InputTemplate;
 import com.study.batch_demo.param.OutputTemplate;
 import com.study.batch_demo.tools.ParseFile;
 import com.study.batch_demo.writer.TextItemWriter;
-import org.springframework.batch.core.*;
-import org.springframework.batch.core.configuration.JobRegistry;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -19,32 +24,28 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.batch.item.file.transform.FieldSet;
-import org.springframework.batch.item.file.transform.FixedLengthTokenizer;
-import org.springframework.batch.item.file.transform.Range;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
-import java.util.List;
+@SpringBootApplication
+public class MutiFileDemoApplication {
 
-// @SpringBootApplication
-public class BatchDemoApplication {
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // String path = args[0];
         // String path =
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(BatchDemoApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(MutiFileDemoApplication.class, args);
         JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);
 
+        Resource temp=applicationContext.getResource("inputTemplate.json");
+        InputTemplate leftInputTemplate = JSON.parseObject(temp.getInputStream(),InputTemplate.class);
+        // InputTemplate leftInputTemplate = ParseFile.parseJson("inputTemplate.json", InputTemplate.class);
 
-        InputTemplate inputTemplate = ParseFile.parseJson("/Users/zhudan/Desktop/项目/科技项目/batch_demo/src/main/resources/inputTemplate.json", InputTemplate.class);
-
+        
         JobBuilderFactory jobBuilderFactory = applicationContext.getBean(JobBuilderFactory.class);
         StepBuilderFactory stepBuilderFactory = applicationContext.getBean(StepBuilderFactory.class);
 
@@ -52,7 +53,7 @@ public class BatchDemoApplication {
         delimitedLineTokenizer.setDelimiter(",");
         delimitedLineTokenizer.setStrict(false);
 
-        List<InputField> fields = inputTemplate.getFields();
+        List<InputField> fields = leftInputTemplate.getFields();
         String[] names = new String[fields.size()];
         int[] columns = new int[fields.size()];
         for (int i = 0; i < fields.size(); i++) {

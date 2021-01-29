@@ -11,12 +11,15 @@ public class InputTemplate {
     private String sourceType;
     private String sourceName;
     private List<InputField> fields;
+    private int fieldCount;
 
-    public InputTemplate(String templateName, String sourceType, String sourceName, List<InputField> fields) {
+    public InputTemplate(String templateName, String sourceType, 
+        String sourceName, List<InputField> fields,int fieldCount) {
         this.templateName = templateName;
         this.sourceType = sourceType;
         this.sourceName = sourceName;
         this.fields = fields;
+        this.fieldCount = fieldCount;
     }
 
     public String getTemplateName() {
@@ -50,4 +53,13 @@ public class InputTemplate {
     public void setFields(List<InputField> fields) {
         this.fields = fields;
     }
+
+    public int getFieldCount() {
+        return fieldCount;
+    }
+
+    public void setFieldCount(int fieldCount) {
+        this.fieldCount = fieldCount;
+    }
+    
 }

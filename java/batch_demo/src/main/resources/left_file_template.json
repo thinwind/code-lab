@@ -1,0 +1,10 @@
+{
+  "templateName": "driver-file",
+  "sourceType": "file",
+  "sourceName": "input-data",
+  "fieldCount":11,
+  "fields": [
+    {"fieldName": "id", "fileLocation": 1,"key":true},
+    {"fieldName": "name", "fileLocation": 2}
+  ]
+}
