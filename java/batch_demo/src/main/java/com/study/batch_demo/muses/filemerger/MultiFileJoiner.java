@@ -38,8 +38,10 @@ public class MultiFileJoiner {
     private final String charset;
     private final FileLoader fileLoader;
 
-    public MultiFileJoiner(String[] files, LineMatcher lineMatcher, String charset,FileLoader fileLoader)
-            throws IOException {
+    // private boolean lastDriverLineMatched = false;
+
+    public MultiFileJoiner(String[] files, LineMatcher lineMatcher, String charset,
+            FileLoader fileLoader) throws IOException {
         this.files = files;
         readers = new BufferedReader[files.length];
         bufferLines = new String[files.length];
@@ -54,12 +56,13 @@ public class MultiFileJoiner {
     private void initReaders() throws IOException {
         for (int i = 0; i < files.length; i++) {
             readers[i] = new BufferedReader(
-                    new InputStreamReader(this.fileLoader.loadFile(files[i]),charset));
+                    new InputStreamReader(this.fileLoader.loadFile(files[i]), charset));
         }
     }
 
     public String nextLine() throws IOException {
         String tmpLine = bufferLines[0];
+        boolean useDriverBuffer;
         if (tmpLine == null) {
             tmpLine = readers[0].readLine();
             if (tmpLine == null) {
@@ -68,6 +71,9 @@ public class MultiFileJoiner {
                 return null;
             }
             bufferLines[0] = tmpLine;
+            useDriverBuffer = false;
+        } else {
+            useDriverBuffer = true;
         }
 
         for (int i = 1; i < readers.length; i++) {
@@ -88,6 +94,10 @@ public class MultiFileJoiner {
 
         MatchResult result = lineMatcher.matchLines(Arrays.copyOf(bufferLines, bufferLines.length));
         boolean[] matchedDetails = result.getMatchedDetails();
+        if (useDriverBuffer && allSlaveNotMatched(matchedDetails)) {
+            bufferLines[0] = null;
+            return nextLine();
+        }
         if (!matchedDetails[0]) {
             bufferLines[0] = null;
         }
@@ -97,6 +107,14 @@ public class MultiFileJoiner {
             }
         }
         return result.getJoinedLine();
+    }
+
+    private boolean allSlaveNotMatched(boolean[] matchedDetails) {
+        boolean result = true;
+        for (int i = 1; i < matchedDetails.length; i++) {
+            result = result && !matchedDetails[i];
+        }
+        return result;
     }
 
     public boolean isEnd() {

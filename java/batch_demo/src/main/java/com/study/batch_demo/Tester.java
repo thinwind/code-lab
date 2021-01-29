@@ -13,6 +13,7 @@
  */
 package com.study.batch_demo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -82,8 +83,8 @@ public class Tester {
         MultiFileJoiner muiltiFileJoiner =
                 new MultiFileJoiner(new String[] {"input-data", "input-data2"}, matcher, "UTF-8",
                         file -> applicationContext.getResource(file).getInputStream());
-                        
-        ItemReader itemReader = new MultiFileItemReader(muiltiFileJoiner,joinedTokenizer);
+
+        ItemReader itemReader = new MultiFileItemReader(muiltiFileJoiner, joinedTokenizer);
 
         temp = applicationContext.getResource("outputTemplate.json");
         OutputTemplate outputTemplate =
@@ -123,22 +124,32 @@ public class Tester {
         List<InputField> leftFields = leftInputTemplate.getFields();
         List<InputField> rightFields = righInputTemplate.getFields();
 
-        String[] names = new String[leftFields.size() + rightFields.size()];
-        int[] columns = new int[names.length];
+        //去掉右边的keyfield
+        // String[] names = new String[leftFields.size() + rightFields.size()];
+        // int[] columns = new int[names.length];
+        List<String> nameList=new ArrayList<>();
+        List<Integer> columnList=new ArrayList<>();
 
         for (int i = 0; i < leftFields.size(); i++) {
-            names[i] = leftFields.get(i).getFieldName();
-            columns[i] = leftFields.get(i).getFileLocation() - 1;
+            nameList.add(leftFields.get(i).getFieldName());
+            columnList.add(leftFields.get(i).getFileLocation() - 1);
         }
 
-        int rightFieldsIdxBase = leftFields.size();
         int rightFieldsLocBase = leftInputTemplate.getFieldCount();
         for (int i = 0; i < rightFields.size(); i++) {
-            names[i + rightFieldsIdxBase] = rightFields.get(i).getFieldName();
-            columns[i + rightFieldsIdxBase] =
-                    rightFields.get(i).getFileLocation() + rightFieldsLocBase;
+            InputField field = rightFields.get(i);
+            if (field.isKey()) {
+                continue;
+            }
+            nameList.add(field.getFieldName());
+            columnList.add(field.getFileLocation() + rightFieldsLocBase - 1);
         }
-
+        int[] columns = new int[columnList.size()];
+        for (int i = 0; i < columns.length; i++) {
+            columns[i] = columnList.get(i);
+        }
+        
+        String[] names=nameList.toArray(new String[nameList.size()]);
         delimitedLineTokenizer.setIncludedFields(columns);
         delimitedLineTokenizer.setNames(names);
         return delimitedLineTokenizer;
@@ -174,7 +185,7 @@ public class Tester {
             String rightLine = lines[1];
             if (rightLine == null) {
                 rightLine = createEmptyLine(righInputTemplate);
-                result.setMatchedDetails(new boolean[] {false, true});
+                result.setMatchedDetails(new boolean[] {false, false});
             } else {
                 FieldSet rightFieldSet = rightTokenizer.tokenize(rightLine);
                 String leftKey = leftFieldSet.readRawString(leftKeyFieldName);

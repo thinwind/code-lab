@@ -25,7 +25,8 @@ public class MultiFileItemReader implements ItemReader<FieldSet> {
         if (line == null) {
             return null;
         }
-        return tokenizer.tokenize(line);
+        FieldSet result = tokenizer.tokenize(line);
+        return result;
     }
 
     public MultiFileItemReader(MultiFileJoiner fileJoiner, LineTokenizer tokenizer) {

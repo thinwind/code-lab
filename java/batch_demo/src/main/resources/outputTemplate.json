@@ -23,7 +23,7 @@
         "sourceTemplate": "slaver-file",
         "sourceFieldName": "amount",
         "displayName": "数量",
-        "length": 8,
+        "length": 12,
         "align": "right"
       }
   ]
