@@ -1,6 +1,6 @@
 package com.study.batch_demo.reader;
 
-import com.study.batch_demo.muses.filemerger.MultiFileJoiner;
+import com.study.batch_demo.muses.MultiFileJoiner;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;

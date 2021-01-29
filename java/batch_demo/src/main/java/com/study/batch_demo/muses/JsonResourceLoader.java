@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.study.batch_demo.muses.filemerger;
-
-import java.io.IOException;
-import java.io.InputStream;
+package com.study.batch_demo.muses;
 
 /**
  *
- * TODO FileLoader说明
+ * TODO JsonResourceLoader说明
  *
  * @author Shang Yehua <niceshang@outlook.com>
- * @since 2021-00-05  12:00
+ * @since 2021-00-05  10:29
  *
  */
-public interface FileLoader {
-    InputStream loadFile(String file) throws IOException;
+public class JsonResourceLoader {
+    
 }
