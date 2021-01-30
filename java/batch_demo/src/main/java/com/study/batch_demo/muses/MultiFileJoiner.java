@@ -11,13 +11,12 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package hi.muses.happy.filemerger;
+package com.study.batch_demo.muses;
 
 import java.util.Arrays;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
@@ -28,28 +27,41 @@ import java.io.Reader;
  * @since 2021-00-04  20:51
  *
  */
-public class MuiltiFileJoiner {
+public class MultiFileJoiner {
     private final String[] files;
     private final BufferedReader[] readers;
     private final String[] bufferLines;
     private final boolean[] readerEnded;
     private boolean end;
     private final LineMatcher lineMatcher;
+    private final String charset;
+    private final FileLoader fileLoader;
 
-    public MuiltiFileJoiner(String[] files, LineMatcher lineMatcher) throws FileNotFoundException {
+    // private boolean lastDriverLineMatched = false;
+
+    public MultiFileJoiner(String[] files, LineMatcher lineMatcher, String charset,
+            FileLoader fileLoader) throws IOException {
         this.files = files;
         readers = new BufferedReader[files.length];
         bufferLines = new String[files.length];
         readerEnded = new boolean[files.length];
         end = false;
         this.lineMatcher = lineMatcher;
+        this.charset = charset;
+        this.fileLoader = fileLoader;
+        initReaders();
+    }
+
+    private void initReaders() throws IOException {
         for (int i = 0; i < files.length; i++) {
-            readers[i] = new BufferedReader(new FileReader(files[i]));
+            readers[i] = new BufferedReader(
+                    new InputStreamReader(this.fileLoader.loadFile(files[i]), charset));
         }
     }
 
     public String nextLine() throws IOException {
         String tmpLine = bufferLines[0];
+        boolean useDriverBuffer;
         if (tmpLine == null) {
             tmpLine = readers[0].readLine();
             if (tmpLine == null) {
@@ -58,6 +70,9 @@ public class MuiltiFileJoiner {
                 return null;
             }
             bufferLines[0] = tmpLine;
+            useDriverBuffer = false;
+        } else {
+            useDriverBuffer = true;
         }
 
         for (int i = 1; i < readers.length; i++) {
@@ -78,12 +93,27 @@ public class MuiltiFileJoiner {
 
         MatchResult result = lineMatcher.matchLines(Arrays.copyOf(bufferLines, bufferLines.length));
         boolean[] matchedDetails = result.getMatchedDetails();
-        for (int i = 0; i < matchedDetails.length; i++) {
+        if (useDriverBuffer && allSlaveNotMatched(matchedDetails)) {
+            bufferLines[0] = null;
+            return nextLine();
+        }
+        if (!matchedDetails[0]) {
+            bufferLines[0] = null;
+        }
+        for (int i = 1; i < matchedDetails.length; i++) {
             if (matchedDetails[i]) {
                 bufferLines[i] = null;
             }
         }
         return result.getJoinedLine();
+    }
+
+    private boolean allSlaveNotMatched(boolean[] matchedDetails) {
+        boolean result = true;
+        for (int i = 1; i < matchedDetails.length; i++) {
+            result = result && !matchedDetails[i];
+        }
+        return result;
     }
 
     public boolean isEnd() {

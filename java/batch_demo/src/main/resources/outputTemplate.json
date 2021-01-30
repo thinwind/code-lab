@@ -4,7 +4,7 @@
   "details": [
     {
       "fieldName": "id",
-      "sourceTemplate": "template1",
+      "sourceTemplate": "driver-file",
       "sourceFieldName": "id",
       "displayName": "ID",
       "length": 8,
@@ -12,11 +12,19 @@
     },
     {
       "fieldName": "name",
-      "sourceTemplate": "template1",
+      "sourceTemplate": "driver-file",
       "sourceFieldName": "name",
       "displayName": "姓名",
       "length": 6,
       "align": "right"
-    }
+    },
+    {
+        "fieldName": "amount",
+        "sourceTemplate": "slaver-file",
+        "sourceFieldName": "amount",
+        "displayName": "数量",
+        "length": 12,
+        "align": "right"
+      }
   ]
 }

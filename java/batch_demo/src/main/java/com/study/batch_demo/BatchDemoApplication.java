@@ -33,7 +33,7 @@ import org.springframework.core.io.FileSystemResource;
 
 import java.util.List;
 
-@SpringBootApplication
+// @SpringBootApplication
 public class BatchDemoApplication {
 
     public static void main(String[] args) {
