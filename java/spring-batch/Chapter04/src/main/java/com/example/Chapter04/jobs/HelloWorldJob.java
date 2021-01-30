@@ -16,9 +16,8 @@
 package com.example.Chapter04.jobs;
 
 import java.util.Arrays;
-
 import com.example.Chapter04.batch.ParameterValidator;
-
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -30,6 +29,7 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
@@ -77,12 +77,12 @@ public class HelloWorldJob {
 //				.build();
 //	}
 //
-//	@Bean
-//	public Job job() {
-//		return this.jobBuilderFactory.get("basicJob")
-//				.start(step1())
-//				.build();
-//	}
+	@Bean
+	public Job job() {
+		return this.jobBuilderFactory.get("basicJob2")
+				.start(step1())
+				.build();
+	}
 
 	@Bean
 	public Step step1() {
@@ -121,7 +121,8 @@ public class HelloWorldJob {
 //			};
 //	}
 
-//	public static void main(String[] args) {
-//		SpringApplication.run(HelloWorldJob.class, args);
-//	}
+	public static void main(String[] args){
+        args=new String[]{"name=bar3"};
+		SpringApplication.run(HelloWorldJob.class, args);
+	}
 }
