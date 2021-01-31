@@ -1,13 +1,13 @@
 spring:
   batch:
-#    job:
-#      enabled: false
-    initialize-schema: always
+   job:
+     enabled: false
+   initialize-schema: always
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spring_batch
-    username: 'root'
-    password: 'p@ssw0rd'
-    initialization-mode: always
+    url: jdbc:mysql://localhost:3306/batch-demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: mysql
+    # initialization-mode: always
     continue-on-error: true
     platform: mysql
