@@ -31,8 +31,8 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author Michael Minella
  */
-@EnableBatchProcessing
-@SpringBootApplication
+// @EnableBatchProcessing
+// @SpringBootApplication
 public class QuartzJobConfiguration {
 
 	@Configuration

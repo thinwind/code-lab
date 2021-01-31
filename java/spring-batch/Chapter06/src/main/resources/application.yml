@@ -1,7 +1,7 @@
 spring:
   batch:
    job:
-     enabled: false
+     enabled: true
    initialize-schema: always
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
