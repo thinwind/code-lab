@@ -49,7 +49,7 @@ public class DemoApplication {
 	}
 
 	public static void main(String[] args) {
-        args=new String[]{"angry=t"};
+        args=new String[]{"just=add"};
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
