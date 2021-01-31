@@ -6,4 +6,5 @@ spring:
     password: mysql
   batch:
     initialize-schema: always
-# spring.batch.job.names=conditionalStepLogicJob
+    job:
+      names: conditionalStepLogicJob

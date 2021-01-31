@@ -15,6 +15,7 @@
  */
 package com.example.Chapter04.jobs;
 
+import com.example.Chapter04.batch.DailyJobTimestamper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -22,6 +23,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.step.job.DefaultJobParametersExtractor;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,18 +84,28 @@ public class FlowJob {
 				.build();
 	}
 
+    @Bean
+    public Job preProcessingJob(){
+        return this.jobBuilderFactory.get("preProcessingJob").start(loadFileStep())
+            .next(loadCustomerStep())
+            .next(updateStartStep())
+            .build();
+    }
+    
 	@Bean
 	public Job conditionalStepLogicJob() {
 		return this.jobBuilderFactory.get("conditionalStepLogicJob")
 				.start(intializeBatch())
-				.next(runBatch())
+                .next(runBatch())
+                .incrementer(new DailyJobTimestamper())
 				.build();
 	}
 
 	@Bean
 	public Step intializeBatch() {
-		return this.stepBuilderFactory.get("initalizeBatch")
-				.flow(preProcessingFlow())
+        return this.stepBuilderFactory.get("initalizeBatch")
+                .job(preProcessingJob())
+                .parametersExtractor(new DefaultJobParametersExtractor())
 				.build();
 	}
 
@@ -126,6 +138,7 @@ public class FlowJob {
 	}
 
 	public static void main(String[] args) {
+        args=new String[]{"muses=u"};
 		SpringApplication.run(FlowJob.class, args);
 	}
 }
