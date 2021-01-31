@@ -49,7 +49,7 @@ public class RandomChunkSizePolicy implements CompletionPolicy {
 
 	@Override
 	public RepeatContext start(RepeatContext parent) {
-		this.chunksize = random.nextInt(20);
+		this.chunksize = random.nextInt(1000)+1000;
 		this.totalProcessed = 0;
 
 		System.out.println("The chunk size has been set to " +
