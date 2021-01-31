@@ -8,6 +8,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.explore.JobExplorer;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -42,11 +43,13 @@ public class DemoApplication {
 	@Bean
 	public Job explorerJob() {
 		return this.jobBuilderFactory.get("explorerJob")
-				.start(explorerStep())
+                .start(explorerStep())
+                .incrementer(new RunIdIncrementer())
 				.build();
 	}
 
 	public static void main(String[] args) {
+        args=new String[]{"angry=t"};
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
