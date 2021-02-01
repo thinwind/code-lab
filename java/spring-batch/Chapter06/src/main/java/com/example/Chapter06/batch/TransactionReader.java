@@ -16,13 +16,12 @@
 package com.example.Chapter06.batch;
 
 import com.example.Chapter06.domain.Transaction;
-import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.ItemStreamReader;
+import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.file.transform.FieldSet;
 
 /**
@@ -45,9 +44,9 @@ public class TransactionReader implements ItemStreamReader<Transaction> {
 	}
 
 	private Transaction process(FieldSet fieldSet) {
-		// if(this.recordCount == 25) {
-		// 	throw new ParseException("This isn't what I hoped to happen");
-		// }
+		if(this.recordCount == 25) {
+			throw new ParseException("This isn't what I hoped to happen");
+		}
 
 		Transaction result = null;
 
@@ -64,9 +63,9 @@ public class TransactionReader implements ItemStreamReader<Transaction> {
 			} else {
 				expectedRecordCount = fieldSet.readInt(0);
 
-				// if(expectedRecordCount != this.recordCount) {
-				// 	this.stepExecution.setTerminateOnly();
-				// }
+				if(expectedRecordCount != this.recordCount) {
+					this.stepExecution.setTerminateOnly();
+				}
 			}
 		}
 
@@ -77,14 +76,14 @@ public class TransactionReader implements ItemStreamReader<Transaction> {
 		this.fieldSetReader = fieldSetReader;
 	}
 
-	@AfterStep
-	public ExitStatus afterStep(StepExecution execution) {
-		if(recordCount == expectedRecordCount) {
-			return execution.getExitStatus();
-		} else {
-			return ExitStatus.STOPPED;
-		}
-	}
+	// @AfterStep
+	// public ExitStatus afterStep(StepExecution execution) {
+	// 	if(recordCount == expectedRecordCount) {
+	// 		return execution.getExitStatus();
+	// 	} else {
+	// 		return ExitStatus.STOPPED;
+	// 	}
+	// }
 
 	@BeforeStep
 	public void beforeStep(StepExecution execution) {

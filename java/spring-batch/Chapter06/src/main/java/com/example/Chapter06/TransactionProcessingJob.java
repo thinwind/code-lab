@@ -206,7 +206,7 @@ public class TransactionProcessingJob {
 		// 		.next(applyTransactionsStep())
 		// 		.next(generateAccountSummaryStep())
 		// 		.build();
-		return this.jobBuilderFactory.get("transactionJob")
+		return this.jobBuilderFactory.get("transactionJob2")
 				.start(importTransactionFileStep())
 				.on("STOPPED").stopAndRestart(importTransactionFileStep())
 				.from(importTransactionFileStep()).on("*").to(applyTransactionsStep())
@@ -220,7 +220,7 @@ public class TransactionProcessingJob {
 		List<String> realArgs = new ArrayList<>(Arrays.asList(args));
 
 		realArgs.add("transactionFile=input/transactionFile.csv");
-		realArgs.add("summaryFile=file:///Users/shangyehua/Codeexamples/code-lab/java/spring-batch/Chapter06/target/summaryFile3.csv");
+		realArgs.add("summaryFile=file:///C:/tmp/summaryFile3.csv");
 
 		SpringApplication.run(TransactionProcessingJob.class, realArgs.toArray(new String[realArgs.size()]));
 	}
