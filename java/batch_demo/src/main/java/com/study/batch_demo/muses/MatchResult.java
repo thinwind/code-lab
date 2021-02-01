@@ -29,7 +29,6 @@ public class MatchResult {
     
     //匹配结果，依次为1和2是否匹配，1/2和3是否匹配,....
     //第一行在所有行不匹配时才应该返回false
-    //最终结果会比参与匹配的行数少1
     private boolean[] matchedDetails;
 
     public String getJoinedLine() {

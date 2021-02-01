@@ -13,25 +13,14 @@
  */
 package com.study.batch_demo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
-import java.io.IOException;
 import com.alibaba.fastjson.JSON;
-import com.study.batch_demo.muses.LineMatcher;
-import com.study.batch_demo.muses.MatchResult;
-import com.study.batch_demo.muses.MultiFileJoiner;
+import com.study.batch_demo.muses.*;
 import com.study.batch_demo.param.InputField;
 import com.study.batch_demo.param.InputTemplate;
 import com.study.batch_demo.param.OutputTemplate;
 import com.study.batch_demo.reader.MultiFileItemReader;
 import com.study.batch_demo.writer.TextItemWriter;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -49,6 +38,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
+
 /**
  *
  * TODO Tester说明
@@ -57,38 +52,25 @@ import org.springframework.core.io.Resource;
  * @since 2021-00-05  10:33
  *
  */
-//@SpringBootApplication
-public class Tester {
-
-    static final String DELIMITER = ",";
+@SpringBootApplication
+public class RestartableTester {
 
     public static void main(String[] args) throws IOException {
         ConfigurableApplicationContext applicationContext =
-                SpringApplication.run(Tester.class, args);
+                SpringApplication.run(RestartableTester.class, args);
 
-
-        Resource temp = applicationContext.getResource("left_file_template.json");
-        InputTemplate leftInputTemplate =
-                JSON.parseObject(temp.getInputStream(), InputTemplate.class);
-
-        temp = applicationContext.getResource("right_file_template.json");
-        InputTemplate righInputTemplate =
-                JSON.parseObject(temp.getInputStream(), InputTemplate.class);
-
+        InputTemplate leftInputTemplate = loadTemplate(applicationContext,"left_file_template.json",InputTemplate.class);
+        InputTemplate righInputTemplate = loadTemplate(applicationContext,"right_file_template.json",InputTemplate.class);
 
         DelimitedLineTokenizer joinedTokenizer =
                 createTokenizer(leftInputTemplate, righInputTemplate);
-        LineMatcher matcher = createLineMatcher(leftInputTemplate, righInputTemplate);
+        LineMatcher matcher = new TwoFileLineMatcher(leftInputTemplate, righInputTemplate);
 
-        MultiFileJoiner muiltiFileJoiner =
-                new MultiFileJoiner(new String[] {"input-data", "input-data2"}, matcher, "UTF-8",
-                        file -> applicationContext.getResource(file).getInputStream());
+        MultiFileReader itemReader = new MultiFileReader(new String[] {"input-data", "input-data2"}, matcher, "UTF-8",
+                joinedTokenizer,file -> applicationContext.getResource(file).getInputStream());
+        itemReader.setName("two_file_reader");
 
-        ItemReader itemReader = new MultiFileItemReader(muiltiFileJoiner, joinedTokenizer);
-
-        temp = applicationContext.getResource("outputTemplate.json");
-        OutputTemplate outputTemplate =
-                JSON.parseObject(temp.getInputStream(), OutputTemplate.class);
+        OutputTemplate outputTemplate = loadTemplate(applicationContext,"outputTemplate.json",OutputTemplate.class);
 
         JobBuilderFactory jobBuilderFactory = applicationContext.getBean(JobBuilderFactory.class);
         StepBuilderFactory stepBuilderFactory =
@@ -96,13 +78,13 @@ public class Tester {
 
         ItemWriter textItemWriter = new TextItemWriter(
                 new FileSystemResource("target/test-outputs/output1.txt"), outputTemplate);
-        TaskletStep step = stepBuilderFactory.get("file2FileStep").chunk(50).reader(itemReader)
+        TaskletStep step = stepBuilderFactory.get("file2FileStep").chunk(3).reader(itemReader)
                 .writer(textItemWriter).build();
 
         JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);
-        Job job = jobBuilderFactory.get("file2File").start(step).build();
+        Job job = jobBuilderFactory.get("joinfile5").start(step).build();
         JobParameters jobParameter = new JobParametersBuilder()
-                .addLong("time", System.currentTimeMillis()).toJobParameters();
+                .addLong("time", 12345678L).toJobParameters();
         try {
             JobExecution run = jobLauncher.run(job, jobParameter);
         } catch (JobExecutionAlreadyRunningException e) {
@@ -116,10 +98,18 @@ public class Tester {
         }
     }
 
+    private static <T> T loadTemplate(
+            ConfigurableApplicationContext applicationContext,String location,Class<T> cls) throws IOException {
+        Resource temp = applicationContext.getResource(location);
+        T template =
+                JSON.parseObject(temp.getInputStream(), cls);
+        return template;
+    }
+
     private static DelimitedLineTokenizer createTokenizer(InputTemplate leftInputTemplate,
             InputTemplate righInputTemplate) {
         DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
-        delimitedLineTokenizer.setDelimiter(DELIMITER);
+        //delimitedLineTokenizer.setDelimiter(DELIMITER);
         delimitedLineTokenizer.setStrict(false);
         List<InputField> leftFields = leftInputTemplate.getFields();
         List<InputField> rightFields = righInputTemplate.getFields();
@@ -154,71 +144,5 @@ public class Tester {
         delimitedLineTokenizer.setNames(names);
         return delimitedLineTokenizer;
     }
-
-    private static DelimitedLineTokenizer createTokenizer(InputTemplate inputTemplate) {
-        DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
-        delimitedLineTokenizer.setDelimiter(DELIMITER);
-        delimitedLineTokenizer.setStrict(false);
-
-        List<InputField> fields = inputTemplate.getFields();
-        String[] names = new String[fields.size()];
-        int[] columns = new int[fields.size()];
-        for (int i = 0; i < fields.size(); i++) {
-            names[i] = fields.get(i).getFieldName();
-            columns[i] = fields.get(i).getFileLocation() - 1;
-        }
-        delimitedLineTokenizer.setIncludedFields(columns);
-        delimitedLineTokenizer.setNames(names);
-        return delimitedLineTokenizer;
-    }
-
-    private static LineMatcher createLineMatcher(InputTemplate leftInputTemplate,
-            InputTemplate righInputTemplate) {
-        DelimitedLineTokenizer leftTokenizer = createTokenizer(leftInputTemplate);
-        DelimitedLineTokenizer rightTokenizer = createTokenizer(righInputTemplate);
-        String leftKeyFieldName = findKeyFieldName(leftInputTemplate);
-        String rightKeyFieldName = findKeyFieldName(righInputTemplate);
-        return lines -> {
-            MatchResult result = new MatchResult();
-            String driverLine = lines[0];
-            FieldSet leftFieldSet = leftTokenizer.tokenize(driverLine);
-            String rightLine = lines[1];
-            if (rightLine == null) {
-                rightLine = createEmptyLine(righInputTemplate);
-                result.setMatchedDetails(new boolean[] {false, false});
-            } else {
-                FieldSet rightFieldSet = rightTokenizer.tokenize(rightLine);
-                String leftKey = leftFieldSet.readRawString(leftKeyFieldName);
-                String rightKey = rightFieldSet.readRawString(rightKeyFieldName);
-                if (Objects.equals(leftKey, rightKey)) {
-                    result.setMatchedDetails(new boolean[] {true, true});
-                } else {
-                    rightLine = createEmptyLine(righInputTemplate);
-                    result.setMatchedDetails(new boolean[] {false, false});
-                }
-            }
-            result.setJoinedLine(driverLine + DELIMITER + rightLine);
-            return result;
-        };
-    }
-
-    private static String createEmptyLine(InputTemplate inputTemplate) {
-        StringJoiner joiner = new StringJoiner(DELIMITER);
-        for (int i = 0; i < inputTemplate.getFieldCount(); i++) {
-            joiner.add(" ");
-        }
-        return joiner.toString();
-    }
-
-    //FIXME 可能为null,后果未知
-    private static String findKeyFieldName(InputTemplate inputTemplate) {
-        for (InputField field : inputTemplate.getFields()) {
-            if (field.isKey()) {
-                return field.getFieldName();
-            }
-        }
-        return null;
-    }
-
 
 }
