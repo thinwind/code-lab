@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @author Michael Minella
  */
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+// public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-	Page<Customer> findByCity(String city, Pageable pageRequest);
-}
+// 	Page<Customer> findByCity(String city, Pageable pageRequest);
+// }

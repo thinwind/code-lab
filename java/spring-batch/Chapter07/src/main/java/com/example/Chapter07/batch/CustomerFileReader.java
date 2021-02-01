@@ -15,8 +15,9 @@
  */
 package com.example.Chapter07.batch;
 
+import java.util.ArrayList;
 import com.example.Chapter07.domain.Customer;
-
+import com.example.Chapter07.domain.Transaction;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.file.ResourceAwareItemReaderItemStream;
@@ -43,14 +44,14 @@ public class CustomerFileReader implements ResourceAwareItemReaderItemStream<Cus
 		Customer item = (Customer) curItem;
 		curItem = null;
 
-//		if(item != null) {
-//			item.setTransactions(new ArrayList<>());
-//
-//			while(peek() instanceof Transaction) {
-//				item.getTransactions().add((Transaction) curItem);
-//				curItem = null;
-//			}
-//		}
+		if(item != null) {
+			item.setTransactions(new ArrayList<>());
+
+			while(peek() instanceof Transaction) {
+				item.getTransactions().add((Transaction) curItem);
+				curItem = null;
+			}
+		}
 
 		return item;
 	}

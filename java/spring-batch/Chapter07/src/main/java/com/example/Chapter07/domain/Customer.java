@@ -13,16 +13,15 @@
  */
 package com.example.Chapter07.domain;
 
+import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * @author Michael Minella
  */
-@Entity
-@Table(name = "customer")
+// @Entity
+// @Table(name = "customer")
 public class Customer {
 
     @Id
@@ -41,7 +40,7 @@ public class Customer {
     private String state;
     private String zipCode;
 
-    //	private List<Transaction> transactions;
+    private List<Transaction> transactions;
 
     public Customer() {
     }
@@ -107,11 +106,11 @@ public class Customer {
 
 
     public String getAddress() {
-    	return address;
+        return address;
     }
 
     public void setAddress(String address) {
-    	this.address = address;
+        this.address = address;
     }
 
     public String getCity() {
@@ -138,15 +137,15 @@ public class Customer {
         this.zipCode = zipCode;
     }
 
-    //	public List<Transaction> getTransactions() {
-    //		return transactions;
-    //	}
-    //
-    //	@XmlElementWrapper(name = "transactions")
-    //	@XmlElement(name = "transaction")
-    //	public void setTransactions(List<Transaction> transactions) {
-    //		this.transactions = transactions;
-    //	}
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    // @XmlElementWrapper(name = "transactions")
+    // @XmlElement(name = "transaction")
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
     // @Override
     // public String toString() {
@@ -162,34 +161,34 @@ public class Customer {
     // 			'}';
     // }
 
-    //	@Override
-    //	public String toString() {
-    //		StringBuilder output = new StringBuilder();
-    //
-    //		output.append(firstName);
-    //		output.append(" ");
-    //		output.append(middleInitial);
-    //		output.append(". ");
-    //		output.append(lastName);
-    //
-    //		if(transactions != null&& transactions.size() > 0) {
-    //			output.append(" has ");
-    //			output.append(transactions.size());
-    //			output.append(" transactions.");
-    //		} else {
-    //			output.append(" has no transactions.");
-    //		}
-    //
-    //		return output.toString();
-    //	}
-
     @Override
     public String toString() {
-        return "Customer{" + "firstName='" + firstName + '\'' + ", middleInitial='" + middleInitial
-                + '\'' + ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' 
-                // + ", addressNumber='" + addressNumber + '\'' + ", street='" + street + '\''
-                + ", city='" + city + '\'' + ", state='" + state + '\'' + ", zipCode='" + zipCode
-                + '\'' + '}';
+        StringBuilder output = new StringBuilder();
+
+        output.append(firstName);
+        output.append(" ");
+        output.append(middleInitial);
+        output.append(". ");
+        output.append(lastName);
+
+        if (transactions != null && transactions.size() > 0) {
+            output.append(" has ");
+            output.append(transactions.size());
+            output.append(" transactions.");
+        } else {
+            output.append(" has no transactions.");
+        }
+
+        return output.toString();
     }
+
+    // @Override
+    // public String toString() {
+    //     return "Customer{" + "firstName='" + firstName + '\'' + ", middleInitial='" + middleInitial
+    //             + '\'' + ", lastName='" + lastName + '\'' +
+    //             ", address='" + address + '\'' 
+    //             // + ", addressNumber='" + addressNumber + '\'' + ", street='" + street + '\''
+    //             + ", city='" + city + '\'' + ", state='" + state + '\'' + ", zipCode='" + zipCode
+    //             + '\'' + '}';
+    // }
 }
