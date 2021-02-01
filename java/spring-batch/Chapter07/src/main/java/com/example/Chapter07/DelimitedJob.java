@@ -11,6 +11,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
@@ -45,8 +46,8 @@ public class DelimitedJob {
 						"city",
 						"state",
                         "zipCode"})
-                .targetType(Customer.class)
-				// .fieldSetMapper(new CustomerFieldSetMapper())
+                // .targetType(Customer.class)
+				.fieldSetMapper(new CustomerFieldSetMapper())
 				.resource(inputFile)
 				.build();
 	}
@@ -78,15 +79,16 @@ public class DelimitedJob {
 	@Bean
 	public Job job() {
 		return this.jobBuilderFactory.get("job")
-				.start(copyFileStep())
+                .start(copyFileStep())
+                .incrementer(new RunIdIncrementer())
 				.build();
 	}
 
 
 	public static void main(String[] args) {
-		List<String> realArgs = Arrays.asList("customerFile=/input/customer.csv");
+		List<String> realArgs = Arrays.asList("customerFile=/input/customer.csv","foo=bar");
 
-		SpringApplication.run(DelimitedJob.class, realArgs.toArray(new String[1]));
+		SpringApplication.run(DelimitedJob.class, realArgs.toArray(new String[2]));
 	}
 
 }
