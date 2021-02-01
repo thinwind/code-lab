@@ -32,35 +32,35 @@ public class DelimitedJob {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
-	@Bean
-	@StepScope
-	public FlatFileItemReader<Customer> customerItemReader(@Value("#{jobParameters['customerFile']}")Resource inputFile) {
-		return new FlatFileItemReaderBuilder<Customer>()
-				.name("customerItemReader")
-				.delimited()
-				.names(new String[] {"firstName",
-						"middleInitial",
-						"lastName",
-						"addressNumber",
-						"street",
-						"city",
-						"state",
-                        "zipCode"})
-                // .targetType(Customer.class)
-				.fieldSetMapper(new CustomerFieldSetMapper())
-				.resource(inputFile)
-				.build();
-	}
 	// @Bean
 	// @StepScope
 	// public FlatFileItemReader<Customer> customerItemReader(@Value("#{jobParameters['customerFile']}")Resource inputFile) {
 	// 	return new FlatFileItemReaderBuilder<Customer>()
 	// 			.name("customerItemReader")
-	// 			.lineTokenizer(new CustomerFileLineTokenizer())
+	// 			.delimited()
+	// 			.names(new String[] {"firstName",
+	// 					"middleInitial",
+	// 					"lastName",
+	// 					"addressNumber",
+	// 					"street",
+	// 					"city",
+	// 					"state",
+    //                     "zipCode"})
+    //             // .targetType(Customer.class)
 	// 			.fieldSetMapper(new CustomerFieldSetMapper())
 	// 			.resource(inputFile)
 	// 			.build();
 	// }
+	@Bean
+	@StepScope
+	public FlatFileItemReader<Customer> customerItemReader(@Value("#{jobParameters['customerFile']}")Resource inputFile) {
+		return new FlatFileItemReaderBuilder<Customer>()
+				.name("customerItemReader")
+				.lineTokenizer(new CustomerFileLineTokenizer())
+				.fieldSetMapper(new CustomerFieldSetMapper())
+				.resource(inputFile)
+				.build();
+	}
 
 	@Bean
 	public ItemWriter<Customer> itemWriter() {
