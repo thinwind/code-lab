@@ -2,7 +2,6 @@ package com.study.batch_demo.muses;
 
 import org.springframework.batch.item.*;
 import org.springframework.batch.item.file.transform.FieldSet;
-import org.springframework.batch.item.file.transform.LineTokenizer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,22 +19,22 @@ public class MultiFileReader extends ItemStreamSupport implements
     private final BufferedReader[] readers;
     private final String[] bufferLines;
     private final boolean[] readerEnded;
-    private final LineMatcher lineMatcher;
+    private final LineMatcher<FieldSet> lineMatcher;
     private final String charset;
     private final FileLoader fileLoader;
     private final long[] readerPosArray;
-    private final LineTokenizer tokenizer;
+    private final int lineBreakerLength;
 
-    private int counter=0;
+    private int counter = 0;
 
 
-    public MultiFileReader(String[] files, LineMatcher lineMatcher,
-                           String charset,LineTokenizer tokenizer, FileLoader fileLoader) throws IOException {
+    public MultiFileReader(String[] files, LineMatcher<FieldSet> lineMatcher,
+                           String charset, int lineBreakerLength, FileLoader fileLoader) throws IOException {
         this.files = files;
         this.lineMatcher = lineMatcher;
         this.charset = charset;
         this.fileLoader = fileLoader;
-        this.tokenizer = tokenizer;
+        this.lineBreakerLength = lineBreakerLength;
         this.readerPosArray = new long[files.length];
         bufferLines = new String[files.length];
         readerEnded = new boolean[files.length];
@@ -51,19 +50,13 @@ public class MultiFileReader extends ItemStreamSupport implements
     }
 
     @Override
-    public FieldSet read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        String line = nextLine();
-        if (line == null) {
-            return null;
-        }
-        //if(counter == 11){
-        //    throw new UnexpectedInputException("just for test");
-        //}
+    public FieldSet read() throws UnexpectedInputException, ParseException, NonTransientResourceException, IOException {
+        //Mock for error happens
+//        if(counter == 11){
+//            throw new UnexpectedInputException("just for test");
+//        }
         counter++;
-        return tokenizer.tokenize(line);
-    }
 
-    public String nextLine() throws IOException {
         String tmpLine = bufferLines[0];
         boolean useDriverBuffer;
         if (tmpLine == null) {
@@ -73,7 +66,7 @@ public class MultiFileReader extends ItemStreamSupport implements
                 return null;
             }
             bufferLines[0] = tmpLine;
-            readerPosArray[0]+=tmpLine.length()+1;
+            readerPosArray[0] += tmpLine.length() + lineBreakerLength;
             useDriverBuffer = false;
         } else {
             useDriverBuffer = true;
@@ -91,15 +84,15 @@ public class MultiFileReader extends ItemStreamSupport implements
                     continue;
                 }
                 bufferLines[i] = tmpLine;
-                readerPosArray[i]+=tmpLine.length()+1;
+                readerPosArray[i] += tmpLine.length() + lineBreakerLength;
             }
         }
 
-        MatchResult result = lineMatcher.matchLines(Arrays.copyOf(bufferLines, bufferLines.length));
+        MatchResult<FieldSet> result = lineMatcher.matchLines(Arrays.copyOf(bufferLines, bufferLines.length));
         boolean[] matchedDetails = result.getMatchedDetails();
         if (useDriverBuffer && allSlaveNotMatched(matchedDetails)) {
             bufferLines[0] = null;
-            return nextLine();
+            return read();
         }
         if (!matchedDetails[0]) {
             bufferLines[0] = null;
@@ -121,21 +114,19 @@ public class MultiFileReader extends ItemStreamSupport implements
     }
 
     public void close() throws ItemStreamException {
-        for (Reader reader:readers){
+        for (Reader reader : readers) {
             closeReaderSilently(reader);
         }
     }
 
     public void open(ExecutionContext executionContext) throws ItemStreamException {
-        if(executionContext.containsKey(getExecutionContextKey(POS_KEY))){
+        if (executionContext.containsKey(getExecutionContextKey(POS_KEY))) {
             String posString = executionContext.getString(getExecutionContextKey(POS_KEY));
-            if (posString != null) {
-                resetReaderPosArray(posString);
-                try {
-                    skipProccessedLines();
-                } catch (IOException e) {
-                    throw new ItemStreamException(e);
-                }
+            resetReaderPosArray(posString);
+            try {
+                skipProccessedLines();
+            } catch (IOException e) {
+                throw new ItemStreamException(e);
             }
         }
     }
@@ -148,19 +139,19 @@ public class MultiFileReader extends ItemStreamSupport implements
 
     public void update(
             ExecutionContext executionContext) throws ItemStreamException {
-        executionContext.putString(getExecutionContextKey(POS_KEY),readerPosArrayToString());
+        executionContext.putString(getExecutionContextKey(POS_KEY), readerPosArrayToString());
     }
 
-    private String readerPosArrayToString(){
-        StringJoiner joiner=new StringJoiner(",");
-        for(long i:readerPosArray){
+    private String readerPosArrayToString() {
+        StringJoiner joiner = new StringJoiner(",");
+        for (long i : readerPosArray) {
             joiner.add(String.valueOf(i));
         }
         return joiner.toString();
     }
 
-    private void resetReaderPosArray(String posString){
-        String[] posStrArray=posString.split(",");
+    private void resetReaderPosArray(String posString) {
+        String[] posStrArray = posString.split(",");
         for (int i = 0; i < posStrArray.length; i++) {
             readerPosArray[i] = Long.parseLong(posStrArray[i]);
         }

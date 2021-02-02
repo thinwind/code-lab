@@ -23,19 +23,19 @@ package com.study.batch_demo.muses;
  * @since 2021-00-05  07:21
  *
  */
-public class MatchResult {
+public class MatchResult<T> {
     
-    private String joinedLine;
+    private T joinedLine;
     
     //匹配结果，依次为1和2是否匹配，1/2和3是否匹配,....
     //第一行在所有行不匹配时才应该返回false
     private boolean[] matchedDetails;
 
-    public String getJoinedLine() {
+    public T getJoinedLine() {
         return joinedLine;
     }
 
-    public void setJoinedLine(String joinedLine) {
+    public void setJoinedLine(T joinedLine) {
         this.joinedLine = joinedLine;
     }
 

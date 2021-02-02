@@ -2,7 +2,6 @@
   "templateName": "slaver-file",
   "sourceType": "file",
   "sourceName": "input-data2",
-  "fieldCount":2,
   "fields": [
     {"fieldName": "id", "fileLocation": 1,"key":true},
     {"fieldName": "amount", "fileLocation": 2}
