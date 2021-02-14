@@ -16,8 +16,27 @@ spring:
       # schema: "classpath:org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql"
       # initialize-schema: embedded
     properties:
-      '[org.quartz.jobStore.driverDelegateClass]': "org.quartz.impl.jdbcjobstore.StdJDBCDelegate"
-      '[org.quartz.jobStore.isClustered]': true
-      '[org.quartz.jobStore.class]': "org.quartz.impl.jdbcjobstore.JobStoreTX"
-      '[org.quartz.jobStore.tablePrefix]': QRTZ_
-      
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 1000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 3
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+#      org:
+#        quartz:
+#          jobStore:
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#            isClustered: true
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#            tablePrefix: QRTZ_

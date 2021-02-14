@@ -23,8 +23,8 @@ package com.study.batch_demo.muses;
  * @since 2021-00-05  07:20
  *
  */
-public interface LineMatcher {
+public interface LineMatcher<T> {
     
-    MatchResult matchLines(String[] lines);
+    MatchResult<T> matchLines(String[] lines);
     
 }
