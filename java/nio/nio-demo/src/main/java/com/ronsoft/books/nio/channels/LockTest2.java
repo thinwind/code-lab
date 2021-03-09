@@ -21,7 +21,7 @@ import java.util.Random;
  * @author Ron Hitchens (ron@ronsoft.com)
  * @version $Id: LockTest.java,v 1.2 2002/05/19 04:55:45 ron Exp $
  */
-public class LockTest
+public class LockTest2
 {
 	private static final int SIZEOF_INT = 4;
 	private static final int INDEX_START = 0;
@@ -37,7 +37,7 @@ public class LockTest
 	{
 		boolean writer = false;
 		String filename;
-        argv = new String[]{"-w","/Users/shangyehua/tmp/locktest.dat"};
+        argv = new String[]{"-r","/Users/shangyehua/tmp/locktest.dat"};
 		if (argv.length != 2) {
 			System.out.println ("Usage: [ -r | -w ] filename");
 			return;
