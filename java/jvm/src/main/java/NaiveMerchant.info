@@ -1,0 +1,72 @@
+Classfile /Users/shangyehua/Codeexamples/code-lab/java/jvm/src/main/java/NaiveMerchant.class
+  Last modified Mar 30, 2021; size 439 bytes
+  MD5 checksum f3e20bf036397dcb7f32f02b621d63ad
+  Compiled from "ReturnTypeTest.java"
+class NaiveMerchant extends Merchant
+  minor version: 0
+  major version: 55
+  flags: (0x0020) ACC_SUPER
+  this_class: #4                          // NaiveMerchant
+  super_class: #5                         // Merchant
+  interfaces: 0, fields: 0, methods: 3, attributes: 1
+Constant pool:
+   #1 = Methodref          #5.#15         // Merchant."<init>":()V
+   #2 = Methodref          #16.#17        // java/lang/Double.valueOf:(D)Ljava/lang/Double;
+   #3 = Methodref          #4.#18         // NaiveMerchant.actionPrice:(DLCustomer;)Ljava/lang/Double;
+   #4 = Class              #19            // NaiveMerchant
+   #5 = Class              #20            // Merchant
+   #6 = Utf8               <init>
+   #7 = Utf8               ()V
+   #8 = Utf8               Code
+   #9 = Utf8               LineNumberTable
+  #10 = Utf8               actionPrice
+  #11 = Utf8               (DLCustomer;)Ljava/lang/Double;
+  #12 = Utf8               (DLCustomer;)Ljava/lang/Number;
+  #13 = Utf8               SourceFile
+  #14 = Utf8               ReturnTypeTest.java
+  #15 = NameAndType        #6:#7          // "<init>":()V
+  #16 = Class              #21            // java/lang/Double
+  #17 = NameAndType        #22:#23        // valueOf:(D)Ljava/lang/Double;
+  #18 = NameAndType        #10:#11        // actionPrice:(DLCustomer;)Ljava/lang/Double;
+  #19 = Utf8               NaiveMerchant
+  #20 = Utf8               Merchant
+  #21 = Utf8               java/lang/Double
+  #22 = Utf8               valueOf
+  #23 = Utf8               (D)Ljava/lang/Double;
+{
+  NaiveMerchant();
+    descriptor: ()V
+    flags: (0x0000)
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method Merchant."<init>":()V
+         4: return
+      LineNumberTable:
+        line 38: 0
+
+  public java.lang.Double actionPrice(double, Customer);
+    descriptor: (DLCustomer;)Ljava/lang/Double;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=4, args_size=3
+         0: dconst_1
+         1: invokestatic  #2                  // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+         4: areturn
+      LineNumberTable:
+        line 41: 0
+
+  public java.lang.Number actionPrice(double, Customer);
+    descriptor: (DLCustomer;)Ljava/lang/Number;
+    flags: (0x1041) ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC
+    Code:
+      stack=4, locals=4, args_size=3
+         0: aload_0
+         1: dload_1
+         2: aload_3
+         3: invokevirtual #3                  // Method actionPrice:(DLCustomer;)Ljava/lang/Double;
+         6: areturn
+      LineNumberTable:
+        line 38: 0
+}
+SourceFile: "ReturnTypeTest.java"

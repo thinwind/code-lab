@@ -1,0 +1,71 @@
+Classfile /Users/shangyehua/Codeexamples/code-lab/java/jvm/src/main/java/VIPOnlyMerchant.class
+  Last modified Mar 30, 2021; size 386 bytes
+  MD5 checksum e201162b4cfac259abae8cacb0ebf84b
+  Compiled from "GenericTypeTest.java"
+class VIPOnlyMerchant extends Nerchant<VIP>
+  minor version: 0
+  major version: 55
+  flags: (0x0020) ACC_SUPER
+  this_class: #4                          // VIPOnlyMerchant
+  super_class: #5                         // Nerchant
+  interfaces: 0, fields: 0, methods: 3, attributes: 2
+Constant pool:
+   #1 = Methodref          #5.#17         // Nerchant."<init>":()V
+   #2 = Class              #18            // VIP
+   #3 = Methodref          #4.#19         // VIPOnlyMerchant.actionPrice:(DLVIP;)D
+   #4 = Class              #20            // VIPOnlyMerchant
+   #5 = Class              #21            // Nerchant
+   #6 = Utf8               <init>
+   #7 = Utf8               ()V
+   #8 = Utf8               Code
+   #9 = Utf8               LineNumberTable
+  #10 = Utf8               actionPrice
+  #11 = Utf8               (DLVIP;)D
+  #12 = Utf8               (DLDustomer;)D
+  #13 = Utf8               Signature
+  #14 = Utf8               LNerchant<LVIP;>;
+  #15 = Utf8               SourceFile
+  #16 = Utf8               GenericTypeTest.java
+  #17 = NameAndType        #6:#7          // "<init>":()V
+  #18 = Utf8               VIP
+  #19 = NameAndType        #10:#11        // actionPrice:(DLVIP;)D
+  #20 = Utf8               VIPOnlyMerchant
+  #21 = Utf8               Nerchant
+{
+  VIPOnlyMerchant();
+    descriptor: ()V
+    flags: (0x0000)
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method Nerchant."<init>":()V
+         4: return
+      LineNumberTable:
+        line 42: 0
+
+  public double actionPrice(double, VIP);
+    descriptor: (DLVIP;)D
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=4, args_size=3
+         0: dconst_1
+         1: dreturn
+      LineNumberTable:
+        line 45: 0
+
+  public double actionPrice(double, Dustomer);
+    descriptor: (DLDustomer;)D
+    flags: (0x1041) ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC
+    Code:
+      stack=4, locals=4, args_size=3
+         0: aload_0
+         1: dload_1
+         2: aload_3
+         3: checkcast     #2                  // class VIP
+         6: invokevirtual #3                  // Method actionPrice:(DLVIP;)D
+         9: dreturn
+      LineNumberTable:
+        line 42: 0
+}
+Signature: #14                          // LNerchant<LVIP;>;
+SourceFile: "GenericTypeTest.java"
