@@ -1,0 +1,42 @@
+
+super class \u5978\u5546
+	extends \u5546\u6237
+	version 55:0
+{
+  Method "<init>":"()V"
+	stack 1 locals 1
+  {
+		aload_0;
+		invokespecial	Method \u5546\u6237."<init>":"()V";
+		return;
+  }
+  public Method \u6298\u540E\u4EF7\u683C:"(DL\u5BA2\u6237;)D"
+	stack 4 locals 4
+  {
+		aload_3;
+		invokeinterface	InterfaceMethod \u5BA2\u6237.isVIP:"()Z",  1;
+		ifeq	L15;
+		dload_1;
+		invokestatic	Method \u4EF7\u683C\u6B67\u89C6:"()D";
+		dmul;
+		dreturn;
+	L15:	stack_frame_type same;
+		aload_0;
+		dload_1;
+		aload_3;
+		invokespecial	Method \u5546\u6237.\u6298\u540E\u4EF7\u683C:"(DL\u5BA2\u6237;)D";
+		dreturn;
+  }
+  public static Method \u4EF7\u683C\u6B67\u89C6:"()D"
+	stack 4 locals 0
+  {
+		new	class java/util/Random;
+		dup;
+		invokespecial	Method java/util/Random."<init>":"()V";
+		invokevirtual	Method java/util/Random.nextDouble:"()D";
+		ldc2_w	double 0.8d;
+		dadd;
+		dreturn;
+  }
+
+} // end Class \u5978\u5546
