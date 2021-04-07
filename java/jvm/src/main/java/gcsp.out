@@ -1,0 +1,50 @@
+[0.002s][warning][gc] -XX:+PrintGC is deprecated. Will use -Xlog:gc instead.
+[0.013s][info   ][gc] Using G1
+[0.208s][info   ][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 7M->0M(62M) 1.982ms
+[0.420s][info   ][gc] GC(1) Pause Young (Normal) (G1 Evacuation Pause) 36M->0M(62M) 2.960ms
+[0.605s][info   ][gc] GC(2) Pause Young (Normal) (G1 Evacuation Pause) 36M->0M(62M) 7.379ms
+[0.808s][info   ][gc] GC(3) Pause Young (Normal) (G1 Evacuation Pause) 36M->0M(62M) 2.766ms
+[1.007s][info   ][gc] GC(4) Pause Young (Normal) (G1 Evacuation Pause) 36M->0M(75M) 2.900ms
+[1.234s][info   ][gc] GC(5) Pause Young (Normal) (G1 Evacuation Pause) 44M->0M(75M) 2.584ms
+[1.458s][info   ][gc] GC(6) Pause Young (Normal) (G1 Evacuation Pause) 44M->0M(75M) 3.634ms
+[1.708s][info   ][gc] GC(7) Pause Young (Normal) (G1 Evacuation Pause) 44M->0M(75M) 3.271ms
+[1.927s][info   ][gc] GC(8) Pause Young (Normal) (G1 Evacuation Pause) 44M->0M(90M) 2.796ms
+[2.212s][info   ][gc] GC(9) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 1.182ms
+[2.556s][info   ][gc] GC(10) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 2.559ms
+[2.832s][info   ][gc] GC(11) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 2.546ms
+[3.090s][info   ][gc] GC(12) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 1.129ms
+[3.346s][info   ][gc] GC(13) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 2.606ms
+[3.659s][info   ][gc] GC(14) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 2.574ms
+[3.953s][info   ][gc] GC(15) Pause Young (Normal) (G1 Evacuation Pause) 53M->0M(90M) 3.375ms
+[4.272s][info   ][gc] GC(16) Pause Young (Normal) (G1 Evacuation Pause) 54M->0M(90M) 1.886ms
+          vmop                            [ threads:    total initially_running wait_to_block ][ time:    spin   block    sync cleanup    vmop ] page_trap_count
+   0.128: EnableBiasedLocking             [                 8                 0             1 ][             0       0       0       0       0 ]               0 
+   0.136: RevokeBias                      [                 9                 0             1 ][             0       0       0       0       0 ]               0 
+   0.206: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   0.417: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       3 ]               1 
+   0.597: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       7 ]               1 
+   0.805: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   1.002: G1CollectForAllocation          [                11                 1             1 ][             1       0       1       0       2 ]               1 
+   1.229: G1CollectForAllocation          [                11                 1             1 ][             1       0       1       0       2 ]               1 
+   1.454: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       3 ]               1 
+   1.704: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       3 ]               1 
+   1.924: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   2.211: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       1 ]               1 
+   2.553: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   2.829: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   3.089: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       1 ]               1 
+   3.343: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   3.656: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       2 ]               1 
+   3.947: G1CollectForAllocation          [                11                 1             1 ][             1       0       1       0       3 ]               1 
+   4.269: G1CollectForAllocation          [                11                 1             2 ][             0       0       0       0       1 ]               1 
+   4.376: RevokeBias                      [                11                 1             2 ][             0       0       0       0       0 ]               1 
+   8.338: RevokeBias                      [                10                 0             0 ][             0       0       0       0       0 ]               0 
+   8.339: no vm operation                 [                 7                 0             0 ][             0       0       0       0       1 ]               0 
+
+Polling page always armed
+G1CollectForAllocation            17
+EnableBiasedLocking                1
+RevokeBias                         3
+    0 VM operations coalesced during safepoint
+Maximum sync time      1 ms
+Maximum vm operation time (except for Exit VM operation)      7 ms
