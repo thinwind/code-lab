@@ -24,6 +24,7 @@ public class EchoServer {
 
     public static void main(String[] args)
         throws Exception {
+        args = new String[]{"1234"};
         if (args.length != 1) {
             System.err.println("Usage: " + EchoServer.class.getSimpleName() +
                 " <port>"
@@ -53,8 +54,10 @@ public class EchoServer {
             System.out.println(EchoServer.class.getName() +
                 " started and listening for connections on " + f.channel().localAddress());
             f.channel().closeFuture().sync();
+            System.out.println("try over");
         } finally {
             group.shutdownGracefully().sync();
+            System.out.println("finally over");
         }
     }
 }
