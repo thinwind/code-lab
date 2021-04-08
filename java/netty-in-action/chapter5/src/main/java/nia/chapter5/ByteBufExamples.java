@@ -51,7 +51,7 @@ public class ByteBufExamples {
     private final static Random random = new Random();
     private static final ByteBuf BYTE_BUF_FROM_SOMEWHERE = Unpooled.buffer(1024);
     private static final Channel CHANNEL_FROM_SOMEWHERE = new NioSocketChannel();
-    private static final ChannelHandlerContext CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE = DUMMY_INSTANCE;
+    // private static final ChannelHandlerContext CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE = DUMMY_INSTANCE;
     /**
      * Listing 5.1 Backing array
      */
@@ -181,6 +181,7 @@ public class ByteBufExamples {
         ByteBuf sliced = buf.slice(0, 15);
         System.out.println(sliced.toString(utf8));
         buf.setByte(0, (byte)'J');
+        System.out.println(sliced.toString(utf8));
         assert buf.getByte(0) == sliced.getByte(0);
     }
 
@@ -193,9 +194,14 @@ public class ByteBufExamples {
         ByteBuf copy = buf.copy(0, 15);
         System.out.println(copy.toString(utf8));
         buf.setByte(0, (byte)'J');
+        System.out.println(copy.toString(utf8));
         assert buf.getByte(0) != copy.getByte(0);
     }
 
+    public static void main(String[] args) {
+        byteBufSlice();
+    }
+    
     /**
      * Listing 5.12 get() and set() usage
      */
@@ -234,8 +240,8 @@ public class ByteBufExamples {
         Channel channel = CHANNEL_FROM_SOMEWHERE; //get reference form somewhere
         ByteBufAllocator allocator = channel.alloc();
         //...
-        ChannelHandlerContext ctx = CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE; //get reference form somewhere
-        ByteBufAllocator allocator2 = ctx.alloc();
+        // ChannelHandlerContext ctx = CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE; //get reference form somewhere
+        // ByteBufAllocator allocator2 = ctx.alloc();
         //...
     }
 
