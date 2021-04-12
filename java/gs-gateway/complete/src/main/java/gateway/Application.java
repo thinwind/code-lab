@@ -35,8 +35,8 @@ public class Application {
 				.host("*.hystrix.com")
 				.filters(f -> f
 					.hystrix(config -> config
-						.setName("mycmd")
-						.setFallbackUri("forward:/fallback")))
+						.setName("mycmd")))
+						// .setFallbackUri("forward:/fallback")))
 				.uri(httpUri))
 			.build();
 	}
