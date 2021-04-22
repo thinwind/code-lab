@@ -6,11 +6,13 @@
 
 # @lc code=start
 class Solution:
-    def twoSum(self, nums, target):
-        n=len(nums)
-        for i in range(n):
-            for j in range(i+1,n):
-                if nums[i]+nums[j]==target:
-                    return i,j
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        check_table={}
+        for i,num in enumerate(nums):
+            if target - num in check_table:
+                return[check_table[target-num],i]
+            check_table[num] = i
+        
+        return []
             
 # @lc code=end
