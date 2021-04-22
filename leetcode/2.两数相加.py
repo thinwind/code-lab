@@ -4,6 +4,7 @@
 # [2] 两数相加
 #
 
+
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode:
@@ -12,24 +13,38 @@
 #         self.next = next
 
 
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+        
 class Solution:
-    def addTwoNumbers(self, l1, l2):
-        result = []
-        cur = 0
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        root = ListNode()
+        result = root
+        item1 = l1.val
+        item2 = l2.val
         cache = 0
-        for l, r in zip(l1, l2):
-            result.append((l + r + cache) % 10)
-            cache = (l + r + cache) // 10
-        if len(result) < len(l1):
-            for i in range(len(result),len(l1)):
-                result.append((l1[i] + cache) % 10)
-                cache = (l1[i] + cache) // 10
-        elif len(result)<len(l2):
-            for i in range(len(result),len(l2)):
-                result.append((l2[i] + cache) % 10)
-                cache = (l2[i] + cache) // 10
-        if cache>0:
-            result.append(cache)
-
+        while item1 is not None and item2 is not None:
+            result.val = (item1 + item2 + cache) % 10
+            cache = (item1 + item2 + cache) // 10
+            result.next = ListNode()
+            result = result.next
+            item1 = l1.next
+            item2 = l2.next
+        while item1 is not None:
+            result.val = (item1 + cache) % 10
+            cache = (item1 + cache) // 10
+            result.next = ListNode()
+            result = result.next
+            item1 = l1.next
+        while item2 is not None:
+            result.val = (item2 + cache) % 10
+            cache = (item2 + cache) // 10
+            result.next = ListNode()
+            result = result.next
+            item2 = l2.next
+        
+        return root
 
 # @lc code=end
