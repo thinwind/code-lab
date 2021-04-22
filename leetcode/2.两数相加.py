@@ -12,37 +12,20 @@
 #         self.next = next
 
 class Solution:
-    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        root = ListNode()
-        root.next = ListNode()
-        result = root
-        item1 = l1
-        item2 = l2
-        cache = 0
-        while item1 is not None and item2 is not None:
-            result = result.next
-            result.val = (item1.val + item2.val + cache) % 10
-            cache = (item1.val + item2.val + cache) // 10
-            result.next = ListNode()
-            item1 = item1.next
-            item2 = item2.next
-        while item1 is not None:
-            result = result.next
-            result.val = (item1.val + cache) % 10
-            cache = (item1.val + cache) // 10
-            result.next = ListNode()
-            item1 = item1.next
-        while item2 is not None:
-            result = result.next
-            result.val = (item2.val + cache) % 10
-            cache = (item2.val + cache) // 10
-            result.next = ListNode()
-            item2 = item2.next
-
-        if cache > 0:
-            result.next.val = cache
-        else:
-            result.next = None
-        
+    # @return a ListNode
+    def addTwoNumbers(self, l1, l2):
+        carry = 0
+        root = n = ListNode(0)
+        while l1 or l2 or carry:
+            v1 = v2 = 0
+            if l1:
+                v1 = l1.val
+                l1 = l1.next
+            if l2:
+                v2 = l2.val
+                l2 = l2.next
+            carry, val = divmod(v1+v2+carry, 10)
+            n.next = ListNode(val)
+            n = n.next
         return root.next
 # @lc code=end
