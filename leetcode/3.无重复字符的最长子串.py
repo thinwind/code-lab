@@ -8,25 +8,29 @@
 # @lc code=start
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if len(s) == 1:
+        s_len = len(s)
+        if s_len == 1:
             return 1
-        if len(s) == 0:
+        if s_len == 0:
             return 0
         max_len = 0
 
-        for cur in range(0, len(s) - 1):
-            for pos in range(cur + 1, len(s)):
+        for cur in range(0, s_len - 1):
+            if max_len >= s_len - cur:
+                return max_len
+            for pos in range(cur + 1, s_len):
                 sub_str = s[cur:pos]
                 if s[pos] in sub_str:
                     if pos - cur > max_len:
                         max_len = pos - cur
                     break
-                if pos == len(s) - 1:
+                if pos == s_len - 1:
                     if pos + 1 - cur > max_len:
                         max_len = pos + 1 - cur
         if max_len == 0:
-            return len(s)
+            return s_len
 
         return max_len
+
 
 # @lc code=end
