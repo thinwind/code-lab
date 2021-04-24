@@ -17,8 +17,6 @@ class Solution:
             cur = s[i]
             if cur in slide_window:
                 pos = slide_window.index(cur)
-                if max_len >= (len(slide_window)-pos) + (s_len-i):
-                    return max_len
                 slide_window = slide_window[pos+1::]
             slide_window.append(cur)
             max_len = max(max_len,len(slide_window))
