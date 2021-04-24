@@ -1,11 +1,6 @@
 #
-# @lc app=leetcode.cn id=3 lang=python3
-#
 # [3] 无重复字符的最长子串
 #
-
-
-# @lc code=start
 class Solution:
     def lengthOfLongestSubstring(self, s):
         s_len = len(s)
@@ -17,13 +12,11 @@ class Solution:
             cur = s[i]
             if cur in slide_window:
                 pos = slide_window.index(cur)
-                if max_len >= (len(slide_window)-pos) + (s_len-i):
-                    return max_len
                 slide_window = slide_window[pos+1::]
             slide_window.append(cur)
             max_len = max(max_len,len(slide_window))
 
         return max_len
 
-
-# @lc code=end
+if __name__ == "__main__":
+    print(Solution().lengthOfLongestSubstring("dvdf"))
