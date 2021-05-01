@@ -3,6 +3,9 @@ package org.rpis5.chapters.chapter_10.acturator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
+import org.rpis5.chapters.chapter_10.service.TemperatureSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.stereotype.Component;
@@ -15,10 +18,11 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Slf4j
+//@Slf4j
 @Component
 @Endpoint(id = "server-time")
 public class ServerTimeEndpoint {
+   private static final Logger log = LoggerFactory.getLogger(ServerTimeEndpoint.class);
    public static final String TIME_SERVER = "0.ua.pool.ntp.org";
 
    @SuppressWarnings("unused")

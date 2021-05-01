@@ -1,8 +1,6 @@
 package org.rpis5.chapters.chapter_10.controller;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.rpis5.chapters.chapter_10.service.Temperature;
 import org.rpis5.chapters.chapter_10.service.TemperatureSensor;
 import org.springframework.http.MediaType;
@@ -14,8 +12,8 @@ import javax.annotation.PostConstruct;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
-@Slf4j
-@RequiredArgsConstructor
+//@Slf4j
+//@RequiredArgsConstructor
 @RestController
 public class EventStreamController {
    private final MeterRegistry meterRegistry;
@@ -23,6 +21,11 @@ public class EventStreamController {
 
    // Application monitoring
    private AtomicInteger activeStreams;
+
+   public EventStreamController(MeterRegistry meterRegistry, TemperatureSensor temperatureSensor) {
+      this.meterRegistry = meterRegistry;
+      this.temperatureSensor = temperatureSensor;
+   }
 
    @PostConstruct
    public void init() {

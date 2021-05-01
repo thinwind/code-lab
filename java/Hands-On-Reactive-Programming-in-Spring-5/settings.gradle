@@ -4,36 +4,59 @@ include "chapter-01"
 
 include "chapter-02"
 
-include "chapter-03/news-service"
-include "chapter-03/jdk9"
-include "chapter-03/vert.x"
-include "chapter-03/conversion_problem"
-include "chapter-03/push.vs.pull"
-include "chapter-03/rxjava-reactivestreams-ratpack"
-include "chapter-03/async.vs.reactive"
+include ":chapter-03-news-service"
+project(':chapter-03-news-service').projectDir = "chapter-03/news-service" as File
+include ":chapter-03-jdk9"
+project(':chapter-03-jdk9').projectDir = "chapter-03/jdk9" as File
+include ":chapter-03-vert.x"
+project(':chapter-03-vert.x').projectDir = "chapter-03/vert.x" as File
+include ":chapter-03-conversion_problem"
+project(':chapter-03-conversion_problem').projectDir = "chapter-03/conversion_problem" as File
+include ":chapter-03-push.vs.pull"
+project(':chapter-03-push.vs.pull').projectDir = "chapter-03/push.vs.pull" as File
+include ":chapter-03-rxjava-reactivestreams-ratpack"
+project(':chapter-03-rxjava-reactivestreams-ratpack').projectDir = "chapter-03/rxjava-reactivestreams-ratpack" as File
+include ":chapter-03-async.vs.reactive"
+project(':chapter-03-async.vs.reactive').projectDir = "chapter-03/async.vs.reactive" as File
 
 include "chapter-04"
 
 include "chapter-05"
 
-include "chapter-06/samples"
-include "chapter-06/functional-spring-boot"
-include "chapter-06/security-samples"
+include ":chapter-06-samples"
+project(':chapter-06-samples').projectDir = "chapter-06/samples" as File
+include ":chapter-06-functional-spring-boot"
+project(':chapter-06-functional-spring-boot').projectDir = "chapter-06/functional-spring-boot" as File
+include ":chapter-06-security-samples"
+project(':chapter-06-security-samples').projectDir = "chapter-06/security-samples" as File
 
-include "chapter-07/section-01-jdbc"
-include "chapter-07/section-02-jpa"
-include "chapter-07/section-03-mongo"
-include "chapter-07/section-04-rx-mongo"
-include "chapter-07/section-05-rx-mongo-tx"
-include "chapter-07/section-06-r2dbc"
-include "chapter-07/section-07-rx-webflux"
-include "chapter-07/section-08-rx-dbs"
-include "chapter-07/section-09-rx-sync"
-include "chapter-07/section-10-rxjava2-jdbc"
+include ":chapter-07-section-01-jdbc"
+project(':chapter-07-section-01-jdbc').projectDir = "chapter-07/section-01-jdbc" as File
+include ":chapter-07-section-02-jpa"
+project(':chapter-07-section-02-jpa').projectDir = "chapter-07/section-02-jpa" as File
+include ":chapter-07-section-03-mongo"
+project(':chapter-07-section-03-mongo').projectDir = "chapter-07/section-03-mongo" as File
+include ":chapter-07-section-04-rx-mongo"
+project(':chapter-07-section-04-rx-mongo').projectDir = "chapter-07/section-04-rx-mongo" as File
+include ":chapter-07-section-05-rx-mongo-tx"
+project(':chapter-07-section-05-rx-mongo-tx').projectDir = "chapter-07/section-05-rx-mongo-tx" as File
+include ":chapter-07-section-06-r2dbc"
+project(':chapter-07-section-06-r2dbc').projectDir = "chapter-07/section-06-r2dbc" as File
+include ":chapter-07-section-07-rx-webflux"
+project(':chapter-07-section-07-rx-webflux').projectDir = "chapter-07/section-07-rx-webflux" as File
+include ":chapter-07-section-08-rx-dbs"
+project(':chapter-07-section-08-rx-dbs').projectDir = "chapter-07/section-08-rx-dbs" as File
+include ":chapter-07-section-09-rx-sync"
+project(':chapter-07-section-09-rx-sync').projectDir = "chapter-07/section-09-rx-sync" as File
+include ":chapter-07-section-10-rxjava2-jdbc"
+project(':chapter-07-section-10-rxjava2-jdbc').projectDir = "chapter-07/section-10-rxjava2-jdbc" as File
 
-include "chapter-08/dataflow/mongodb-processor"
-include "chapter-08/cloud-stream"
-include "chapter-08/cloud-function"
+include ":chapter-08-dataflow-mongodb-processor"
+project(':chapter-08-dataflow-mongodb-processor').projectDir = "chapter-08/dataflow/mongodb-processor" as File
+include ":chapter-08-cloud-stream"
+project(':chapter-08-cloud-stream').projectDir = "chapter-08/cloud-stream" as File
+include ":chapter-08-cloud-function"
+project(':chapter-08-cloud-function').projectDir = "chapter-08/cloud-function" as File
 
 include "chapter-09"
 

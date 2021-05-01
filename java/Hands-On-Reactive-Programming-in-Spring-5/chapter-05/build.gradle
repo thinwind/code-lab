@@ -1,11 +1,9 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.0.M4'
+		springBootVersion = '2.1.1.RELEASE'
 	}
 	repositories {
 		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -21,15 +19,12 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
-	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 ext {
 	reactorExtraVersion = '3.2.0.RELEASE'
-	springBootAdminVersion = '2.1.0-SNAPSHOT'
-	springCloudVersion = 'Greenwich.BUILD-SNAPSHOT'
+	springBootAdminVersion = '2.1.0'
+	springCloudVersion = 'Greenwich.SR6'
 }
 
 dependencies {
@@ -46,6 +41,7 @@ dependencies {
     compile("io.projectreactor.addons:reactor-extra:${reactorExtraVersion}")
 	
     compileOnly('org.projectlombok:lombok')
+	annotationProcessor('org.projectlombok:lombok')
 
   	testImplementation("io.projectreactor:reactor-test")
 	testCompile('org.springframework.boot:spring-boot-starter-test')

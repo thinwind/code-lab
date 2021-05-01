@@ -24,7 +24,7 @@ repositories {
 
 
 dependencies {
-    compile(project(':chapter-03/news-service'))
+    compile(project(':chapter-03-news-service'))
     compile('org.reactivestreams:reactive-streams-flow-adapters:1.0.2')
     compile('io.reactivex.rxjava2:rxjava:2.2.2')
 }

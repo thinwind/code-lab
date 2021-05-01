@@ -1,7 +1,6 @@
 package org.rpis5.chapters.chapter_10.scheduler;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import lombok.RequiredArgsConstructor;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.Collection;
@@ -22,9 +21,13 @@ import java.util.function.Supplier;
  *    - Number of scheduled tasks
  *    - Number of tasks to schedule at a fixed rate
  */
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class MeteredSchedulersFactory implements Schedulers.Factory {
    private final MeterRegistry meterRegistry;
+
+   public MeteredSchedulersFactory(MeterRegistry meterRegistry) {
+      this.meterRegistry = meterRegistry;
+   }
 
    public ScheduledExecutorService decorateExecutorService(
       String schedulerType,

@@ -1,6 +1,5 @@
 package org.rpis5.chapters.chapter_10.acturator;
 
-import lombok.RequiredArgsConstructor;
 import org.rpis5.chapters.chapter_10.service.TemperatureSensor;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.ReactiveHealthIndicator;
@@ -8,12 +7,16 @@ import org.springframework.boot.actuate.health.Status;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Component
 class SensorBatteryHealthIndicator implements ReactiveHealthIndicator {
-   private final TemperatureSensor temperatureSensor;
+    private final TemperatureSensor temperatureSensor;
 
-   @Override
+    SensorBatteryHealthIndicator(TemperatureSensor temperatureSensor) {
+        this.temperatureSensor = temperatureSensor;
+    }
+
+    @Override
    public Mono<Health> health() {
       return temperatureSensor
          .batteryLevel()

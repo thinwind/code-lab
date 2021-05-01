@@ -24,6 +24,8 @@ repositories {
 
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.18'
+    implementation 'org.projectlombok:lombok:1.18.18'
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compile('org.mongodb:mongodb-driver-reactivestreams:1.9.2')
     compile('org.mongodb:mongodb-driver:3.8.2')
@@ -45,7 +47,9 @@ dependencies {
     compile('org.reactivestreams:reactive-streams-flow-adapters:1.0.2')
     compile('io.ratpack:ratpack-spring-boot-starter:1.5.4')
 
-    compileOnly('org.projectlombok:lombok:1.18.2')
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+
     testCompile('org.reactivestreams:reactive-streams-tck:1.0.2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
