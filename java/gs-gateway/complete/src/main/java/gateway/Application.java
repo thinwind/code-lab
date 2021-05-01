@@ -31,13 +31,6 @@ public class Application {
 				.path("/get")
 				.filters(f -> f.addRequestHeader("Hello", "World"))
 				.uri(httpUri))
-			.route(p -> p
-				.host("*.hystrix.com")
-				.filters(f -> f
-					.hystrix(config -> config
-						.setName("mycmd")))
-						// .setFallbackUri("forward:/fallback")))
-				.uri(httpUri))
 			.build();
 	}
 	// end::route-locator[]
