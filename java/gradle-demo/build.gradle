@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+sourceCompatibility = 11
+
+group 'com.github.thinwind'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def createDir = {
+    path ->
+        File dir = file(path)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+}
+
+task makeDir() {
+    def paths = ['src/main/java', 'src/main/resources', 'src/test/java', 'src/test/resources']
+    doFirst {
+        paths.forEach(createDir)
+    }
+}
+
+task makeWebDir(){
+    dependsOn makeDir
+    def paths = ['src/main/webapp','src/test/webapp']
+    doFirst {
+        paths.forEach(createDir)
+    }
+}
