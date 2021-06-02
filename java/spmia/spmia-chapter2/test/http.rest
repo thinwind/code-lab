@@ -1,0 +1,7 @@
+GET /v1/organizations/org12345/licenses/lce101 HTTP/1.1
+Host: 127.0.0.1:8080
+
+###
+
+GET /health HTTP/1.1
+Host: 127.0.0.1:8080
