@@ -46,7 +46,7 @@ import org.apache.hc.core5.util.Timeout;
 public class AsyncPostUtil {
     public static final CloseableHttpAsyncClient httpClient;
 
-    private final static String path = "";
+    private final static String path = "/post-mock";
 
     public static final int RESPONSE_INIT_CAP = 1024;
 
@@ -66,7 +66,7 @@ public class AsyncPostUtil {
         httpClient.start();
     }
 
-    public byte[] post(byte[] input, String url, int port)
+    public static byte[] post(byte[] input, String url, int port)
             throws InterruptedException, ExecutionException {
         HttpHost host = new HttpHost(url, port);
         SimpleHttpRequest simpleHttpRequest =
@@ -80,7 +80,7 @@ public class AsyncPostUtil {
     static AsyncResponseConsumer<byte[]> responseConsumer() {
         return new AbstractBinResponseConsumer<byte[]>() {
             private final ByteArrayBuffer buffer = new ByteArrayBuffer(RESPONSE_INIT_CAP);
-
+            
             @Override
             public void releaseResources() {
                 buffer.clear();
