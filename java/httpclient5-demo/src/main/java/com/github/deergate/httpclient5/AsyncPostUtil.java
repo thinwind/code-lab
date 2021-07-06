@@ -46,19 +46,19 @@ import org.apache.hc.core5.util.Timeout;
 public class AsyncPostUtil {
     public static final CloseableHttpAsyncClient httpClient;
 
-    private final static String path = "/post-mock";
+    private final static String path = "/post-async3";
 
     public static final int RESPONSE_INIT_CAP = 1024;
 
     static {
         RequestConfig requestConfig =
-                RequestConfig.custom().setConnectTimeout(1000, TimeUnit.MICROSECONDS)
+                RequestConfig.custom().setConnectTimeout(90000, TimeUnit.MICROSECONDS)
                         .setDefaultKeepAlive(10, TimeUnit.SECONDS).build();
         final IOReactorConfig ioReactorConfig =
                 IOReactorConfig.custom().setSoTimeout(Timeout.ofSeconds(10)).build();
         PoolingAsyncClientConnectionManager cm = new PoolingAsyncClientConnectionManager();
-        cm.setMaxTotal(50);
-        cm.setDefaultMaxPerRoute(20);
+        cm.setMaxTotal(200);
+        cm.setDefaultMaxPerRoute(200);
         httpClient = HttpAsyncClients.custom().disableConnectionState().disableCookieManagement()
                 .disableAuthCaching().disableRedirectHandling()
                 .setDefaultRequestConfig(requestConfig).setIOReactorConfig(ioReactorConfig)
