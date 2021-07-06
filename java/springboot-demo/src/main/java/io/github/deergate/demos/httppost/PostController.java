@@ -172,7 +172,7 @@ public class PostController {
 
                 public Thread newThread(Runnable r) {
                     Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement(),
-                            64 * 1024);
+                            256);
                     if (t.isDaemon()) {
                         t.setDaemon(false);
                     }
