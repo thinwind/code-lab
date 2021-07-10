@@ -1,5 +1,7 @@
 package nia.chapter2.echoserver;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -26,8 +28,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx)
             throws Exception {
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
-                .addListener(ChannelFutureListener.CLOSE);
+        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER);
     }
 
     @Override
@@ -36,4 +37,18 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         cause.printStackTrace();
         ctx.close();
     }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        String date=new SimpleDateFormat("HHmmss.SSS").format(new Date());
+        System.out.println("["+date+"]"+" 连接建立");
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        String date=new SimpleDateFormat("HHmmss.SSS").format(new Date());
+        System.out.println("["+date+"]"+" 连接断开");
+    }
+    
+    
 }
