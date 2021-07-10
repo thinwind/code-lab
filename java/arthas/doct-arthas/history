@@ -1,0 +1,9 @@
+stop
+thread -n 3
+thread b
+thread 47
+thread 
+trace javax.servlet.Filter *
+tt -w 'target.getApplicationContext().getBeansOfType(javax.servlet.Filter.class).values()'
+tt -i 1000 -w 'target.getApplicationContext().getBeansOfType(javax.servlet.Filter.class).values()'
+sc javax.servlet.Filter
