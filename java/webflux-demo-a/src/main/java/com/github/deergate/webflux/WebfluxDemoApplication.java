@@ -14,6 +14,6 @@ public class WebfluxDemoApplication {
 
     @Bean
     public WebClient webClient(){
-        return WebClient.builder().baseUrl("http://127.0.0.1:8081").build();
+        return WebClient.builder().baseUrl("http://127.0.0.2:8081").build();
     }
 }
