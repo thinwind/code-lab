@@ -23,6 +23,7 @@ import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleRequestProducer;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
@@ -33,6 +34,7 @@ import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.nio.AsyncResponseConsumer;
 import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.util.ByteArrayBuffer;
+import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 
 /**
@@ -62,6 +64,7 @@ public class AsyncPostUtil {
         httpClient = HttpAsyncClients.custom().disableConnectionState().disableCookieManagement()
                 .disableAuthCaching().disableRedirectHandling()
                 .setDefaultRequestConfig(requestConfig).setIOReactorConfig(ioReactorConfig)
+                .setRetryStrategy(new DefaultHttpRequestRetryStrategy(3, TimeValue.ofMilliseconds(500)))
                 .setConnectionManager(cm).build();
         httpClient.start();
     }

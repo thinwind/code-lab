@@ -24,8 +24,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author Michael Minella
  */
-@EnableBatchProcessing
-@SpringBootApplication
+// @EnableBatchProcessing
+// @SpringBootApplication
 public class SystemCommandJob {
 
 	@Autowired

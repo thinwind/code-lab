@@ -38,8 +38,8 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author Michael Minella
  */
-// @EnableBatchProcessing
-// @SpringBootApplication
+@EnableBatchProcessing
+@SpringBootApplication
 public class HelloWorldJob {
 
     @Autowired
@@ -48,21 +48,21 @@ public class HelloWorldJob {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
-    @Bean
-    public CompositeJobParametersValidator validator() {
-        CompositeJobParametersValidator validator = new CompositeJobParametersValidator();
+    // @Bean
+    // public CompositeJobParametersValidator validator() {
+    //     CompositeJobParametersValidator validator = new CompositeJobParametersValidator();
 
-        DefaultJobParametersValidator defaultJobParametersValidator =
-                new DefaultJobParametersValidator(new String[] {"fileName"},
-                        new String[] {"name", "currentDate"});
+    //     DefaultJobParametersValidator defaultJobParametersValidator =
+    //             new DefaultJobParametersValidator(new String[] {"fileName"},
+    //                     new String[] {"name", "currentDate"});
 
-        defaultJobParametersValidator.afterPropertiesSet();
+    //     defaultJobParametersValidator.afterPropertiesSet();
 
-        validator.setValidators(
-                Arrays.asList(new ParameterValidator(), defaultJobParametersValidator));
+    //     validator.setValidators(
+    //             Arrays.asList(new ParameterValidator(), defaultJobParametersValidator));
 
-        return validator;
-    }
+    //     return validator;
+    // }
 
     //	@Bean
     //	public Job job() {
@@ -78,47 +78,49 @@ public class HelloWorldJob {
     //
     @Bean
     public Job job() {
-        return this.jobBuilderFactory.get("basicJob2").start(step1()).validator(validator())
-                .incrementer(new DailyJobTimestamper()).listener(new JobLoggerListener())
+        return this.jobBuilderFactory.get("basicJob2").start(step1())
+                // .validator(validator())
+                // .incrementer(new DailyJobTimestamper()).listener(new JobLoggerListener())
                 // .listener(JobListenerFactoryBean.getListener(new JobLoggerListener()))
                 .build();
     }
 
     @Bean
     public Step step1() {
-        return this.stepBuilderFactory.get("step1").tasklet(helloWorldTasklet(null, null)).build();
+        return this.stepBuilderFactory.get("step1").tasklet(helloWorldTasklet()).build();
     }
 
-    @StepScope
-    @Bean
-    public Tasklet helloWorldTasklet(@Value("#{jobParameters['name']}") String name,
-            @Value("#{jobParameters['fileName']}") String fileName) {
+    // @StepScope
+    // @Bean
+    // public Tasklet helloWorldTasklet(@Value("#{jobParameters['name']}") String name,
+    //         @Value("#{jobParameters['fileName']}") String fileName) {
 
-        return (contribution, chunkContext) -> {
-            String nameInCtx = (String)chunkContext.getStepContext().getJobParameters().get("name");
-            ExecutionContext executionContext = chunkContext.getStepContext().getStepExecution()
-            .getJobExecution()
-            .getExecutionContext();
-            executionContext.put("name", nameInCtx);
-            System.out.println(String.format("Hello, %s!", name));
-            System.out.println(String.format("fileName = %s", fileName));
+    //     return (contribution, chunkContext) -> {
+    //         String nameInCtx = (String)chunkContext.getStepContext().getJobParameters().get("name");
+    //         ExecutionContext executionContext = chunkContext.getStepContext().getStepExecution()
+    //         .getJobExecution()
+    //         .getExecutionContext();
+    //         executionContext.put("name", nameInCtx);
+    //         System.out.println(String.format("Hello, %s!", name));
+    //         System.out.println(String.format("fileName = %s", fileName));
+//
+    //         return RepeatStatus.FINISHED;
+    //     };
+    // }
 
-            return RepeatStatus.FINISHED;
-        };
-    }
-
-    //	@Bean
-    //	public Tasklet helloWorldTasklet() {
-    //
-    //		return (contribution, chunkContext) -> {
-    //				String name = (String) chunkContext.getStepContext()
-    //					.getJobParameters()
-    //					.get("name");
-    //
-    //				System.out.println(String.format("Hello, %s!", name));
-    //				return RepeatStatus.FINISHED;
-    //			};
-    //	}
+    	@Bean
+    	public Tasklet helloWorldTasklet() {
+    
+    		return (contribution, chunkContext) -> {
+                    
+    				// String name = (String) chunkContext.getStepContext()
+    				// 	.getJobParameters()
+    				// 	.get("name");
+    
+    				System.out.println(String.format("Hello, %s!","world"));
+    				return RepeatStatus.FINISHED;
+    			};
+    	}
 
     public static void main(String[] args) {
         args = new String[] {"name=bar3", "fileName=test.csv"};
