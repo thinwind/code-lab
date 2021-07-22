@@ -9,7 +9,7 @@
 import os
 import shutil
 
-target_files=['.classpath','.project','.settings','.vscode','.factorypath']
+target_files=['.classpath','.project','.settings','.vscode','.factorypath','.apt_generated_tests']
 
 def clean_eclipse_file(wp):
     subs = os.listdir(wp)
@@ -26,5 +26,5 @@ def clean_eclipse_file(wp):
                 clean_eclipse_file(sub_path)
 
 if __name__ == '__main__':
-    wp = '/Users/shangyehua/Myworkspace/learn-demo/batch-demo'
+    wp = '/Users/shangyehua/Codeexamples/code-lab/java/spring-batch'
     clean_eclipse_file(wp)
