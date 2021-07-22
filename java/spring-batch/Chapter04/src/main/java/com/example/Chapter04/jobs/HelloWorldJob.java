@@ -123,7 +123,7 @@ public class HelloWorldJob {
     	}
 
     public static void main(String[] args) {
-        args = new String[] {"name=bar3", "fileName=test.csv"};
+        args = new String[] {"name=bar0", "fileName=test.csv"};
         SpringApplication.run(HelloWorldJob.class, args);
     }
 }
