@@ -54,7 +54,9 @@ public class AsyncPostUtil {
 
     static {
         RequestConfig requestConfig =
-                RequestConfig.custom().setConnectTimeout(90000, TimeUnit.MICROSECONDS)
+                RequestConfig.custom()
+                .setConnectionRequestTimeout(null)
+                .setConnectTimeout(90000, TimeUnit.MICROSECONDS)
                         .setDefaultKeepAlive(10, TimeUnit.SECONDS).build();
         final IOReactorConfig ioReactorConfig =
                 IOReactorConfig.custom().setSoTimeout(Timeout.ofSeconds(10)).build();

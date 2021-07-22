@@ -15,6 +15,7 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        long v=Long.MAX_VALUE;
+        System.out.println(v/10000/60/60/24/365);
     }
 }
