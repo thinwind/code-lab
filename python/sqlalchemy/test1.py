@@ -159,7 +159,7 @@ some_table = Table("some_table",Base.metadata,autoload_with=engine)
 
 from sqlalchemy import insert
 
-stmt = insert(User.__table__).values(name='Spongebob',fullname='Spongebob Squarepants')
+stmt = insert(User.__table__).values(name='spongebob',fullname='Spongebob Squarepants')
 print(stmt)
 compiled = stmt.compile()
 
@@ -178,6 +178,7 @@ with engine.connect() as conn:
             {"name":"patrick","fullname":"Patrick Star"},
         ]
     )
+    conn.commit()
 
 from sqlalchemy import select,bindparam
 
@@ -203,3 +204,29 @@ with engine.connect() as conn:
 
 stmt = select(user_table).where(user_table.c.name=='spongebob')
 print(stmt)
+
+with engine.connect() as conn:
+    for row in conn.execute(stmt):
+        print(row)
+
+stmt = select(User).where(User.name=='sandy')
+
+with Session(engine) as session:
+    for row in session.execute(stmt):
+        print(row)
+        
+print(select(user_table.c.name, user_table.c.fullname))
+print(select(User))
+
+stmt = select(User.name,User.fullname)
+
+with Session(engine) as session:
+    for row in session.execute(stmt):
+        print(row)
+        
+stmt = select(User.name,Address).where(User.id == Address.user_id) \
+        .order_by(Address.id)
+
+with Session(engine) as session:
+    for row in session.execute(stmt):
+        print(row)
