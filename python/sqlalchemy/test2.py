@@ -7,6 +7,7 @@
         sqlalchemy test2
 '''
 
+from operator import add
 from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -16,6 +17,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import insert
+from sqlalchemy.sql.expression import join
 
 Base = declarative_base()
 
@@ -132,3 +134,50 @@ print(
 print(
     select(User).filter_by(name='spongebob',fullname='Spongebob Squarepants')
 )
+
+print(select(user_table.c.name))
+print(select(user_table.c.name,address_table.c.email_address))
+
+print(
+    select(user_table.c.name,address_table.c.email_address) \
+    .join_from(user_table,address_table)
+)
+
+print(
+    select(user_table.c.name,address_table.c.email_address) \
+    .join(address_table)
+)
+
+print(
+    select(address_table.c.email_address) \
+        .select_from(user_table).join(address_table)
+)
+
+print(
+    select(func.count('*')).select_from(user_table)
+)
+
+print(
+    select(address_table.c.email_address)\
+        .select_from(user_table)\
+        .join(address_table,user_table.c.id==address_table.c.user_id)
+)
+
+print(
+    select(user_table).join(address_table,isouter=True)
+)
+
+print(
+    select(user_table).join(address_table,full=True)
+)
+
+print(
+    select(user_table).order_by(user_table.c.name)
+)
+
+print(
+    select(User).order_by(User.fullname.desc())
+)
+
+count_fn = func.count(user_table.c.id)
+print(count_fn)
