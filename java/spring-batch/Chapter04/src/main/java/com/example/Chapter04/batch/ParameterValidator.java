@@ -32,7 +32,7 @@ public class ParameterValidator implements JobParametersValidator {
 		if(!StringUtils.hasText(fileName)) {
 			throw new JobParametersInvalidException("fileName parameter is missing");
 		}
-		else if(!StringUtils.endsWithIgnoreCase(fileName, "csv")) {
+		else if(!StringUtils.endsWithIgnoreCase(fileName, ".csv")) {
 			throw new JobParametersInvalidException("fileName parameter does not use csv file extension");
 		}
 	}
