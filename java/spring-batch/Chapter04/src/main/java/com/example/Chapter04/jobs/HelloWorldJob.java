@@ -56,7 +56,7 @@ public class HelloWorldJob {
 
         DefaultJobParametersValidator defaultJobParametersValidator =
                 new DefaultJobParametersValidator(new String[] {"fileName"},
-                        new String[] {"name","var", "executionDate","run.id"});
+                        new String[] {"name","var", "currentDate","run.id"});
 
         defaultJobParametersValidator.afterPropertiesSet();
 
@@ -88,8 +88,8 @@ public class HelloWorldJob {
     public Job job() {
         return this.jobBuilderFactory.get("basicJob2").start(step1())
                 .validator(validator())
-                .incrementer(new RunIdIncrementer())
-                //.listener(new JobLoggerListener())
+                .incrementer(new DailyJobTimestamper())
+                .listener(new JobLoggerListener())
                 // .listener(JobListenerFactoryBean.getListener(new JobLoggerListener()))
                 .build();
     }
@@ -130,7 +130,7 @@ public class HelloWorldJob {
     	}
 
     public static void main(String[] args) {
-        args = new String[] {"name=bar","fileName=some-file.csv", "executionDate(date)=2021/07/28","-var=foo"};
+        args = new String[] {"name=bar","fileName=some-file.csv","-var=foo"};
         SpringApplication.run(HelloWorldJob.class, args);
     }
 }
