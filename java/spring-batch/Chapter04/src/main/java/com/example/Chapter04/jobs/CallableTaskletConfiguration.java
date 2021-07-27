@@ -16,6 +16,7 @@
 package com.example.Chapter04.jobs;
 
 import java.util.concurrent.Callable;
+import com.example.Chapter04.batch.DailyJobTimestamper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -45,6 +46,7 @@ public class CallableTaskletConfiguration {
 	public Job callableJob() {
 		return this.jobBuilderFactory.get("callableJob")
 				.start(callableStep())
+                .incrementer(new DailyJobTimestamper())
 				.build();
 	}
 
@@ -58,6 +60,7 @@ public class CallableTaskletConfiguration {
 	@Bean
 	public Callable<RepeatStatus> callableObject() {
 		return () -> {
+            System.out.println(Thread.currentThread().getName());
 			System.out.println("This was executed in another thread");
             System.out.println("========>"+Thread.currentThread().getId());
 			return RepeatStatus.FINISHED;
@@ -76,6 +79,7 @@ public class CallableTaskletConfiguration {
 	}
 
 	public static void main(String[] args) {
+        args = new String[]{"foo=bar"};
 		SpringApplication.run(CallableTaskletConfiguration.class, args);
 	}
 }
