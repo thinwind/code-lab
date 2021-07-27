@@ -49,8 +49,8 @@ import org.springframework.core.io.Resource;
 /**
  * @author Michael Minella
  */
-@EnableBatchProcessing
-@SpringBootApplication
+// @EnableBatchProcessing
+// @SpringBootApplication
 public class ChunkJob {
 
 	@Autowired
