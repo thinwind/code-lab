@@ -15,11 +15,13 @@ package com.example.Chapter04.jobs;
 
 import java.util.Arrays;
 import com.example.Chapter04.batch.DailyJobTimestamper;
+import com.example.Chapter04.batch.HelloWorldTasklet;
 import com.example.Chapter04.batch.JobLoggerListener;
 import com.example.Chapter04.batch.ParameterValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersValidator;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -27,6 +29,7 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.core.listener.JobListenerFactoryBean;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
@@ -40,8 +43,8 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author Michael Minella
  */
-@EnableBatchProcessing
-@SpringBootApplication
+// @EnableBatchProcessing
+// @SpringBootApplication
 public class HelloWorldJob {
 
     @Autowired
@@ -93,10 +96,25 @@ public class HelloWorldJob {
                 // .listener(JobListenerFactoryBean.getListener(new JobLoggerListener()))
                 .build();
     }
+    
+    public StepExecutionListener promotionListener(){
+        ExecutionContextPromotionListener promotionListener=new ExecutionContextPromotionListener();
+        promotionListener.setKeys(new String[]{"name"});
+        return promotionListener;
+    }
 
     @Bean
     public Step step1() {
-        return this.stepBuilderFactory.get("step1").tasklet(helloWorldTasklet(null,null)).build();
+        return this.stepBuilderFactory.get("step1")
+                .tasklet(helloInstance())
+                .listener(promotionListener())
+                .build();
+    }
+    
+    @Bean
+    @StepScope
+    public Tasklet helloInstance(){
+        return new HelloWorldTasklet();
     }
 
     // @StepScope
