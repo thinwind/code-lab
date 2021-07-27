@@ -70,19 +70,19 @@ public class ChunkJob {
 	@Bean
 	public Step chunkStep() {
 		return this.stepBuilderFactory.get("chunkStep")
-				.<String, String>chunk(1000)
-                // .<String, String>chunk(randomCompletionPolicy())
+				// .<String, String>chunk(1000) 
+                .<String, String>chunk(randomCompletionPolicy())
 				.reader(itemReader())
 				.writer(itemWriter())
-                // .listener(new LoggingStepStartStopListener())
+                .listener(new LoggingStepStartStopListener())
 				.build();
 	}
 
 	@Bean
 	public ListItemReader<String> itemReader() {
-		List<String> items = new ArrayList<>(100000);
+		List<String> items = new ArrayList<>(10000);
 
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			items.add(UUID.randomUUID().toString());
 		}
 
