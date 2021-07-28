@@ -34,8 +34,8 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author Michael Minella
  */
-// @EnableBatchProcessing
-// @SpringBootApplication
+@EnableBatchProcessing
+@SpringBootApplication
 public class FlowJob {
 
 	@Autowired
