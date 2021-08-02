@@ -26,13 +26,13 @@ public class EchoServer {
         throws Exception {
         args = new String[]{"1234"};
         if (args.length != 1) {
-            System.err.println("Usage: " + EchoServer.class.getSimpleName() +
+            System.err.println("Usage: " + RestartableEchoServer.class.getSimpleName() +
                 " <port>"
             );
             return;
         }
         int port = Integer.parseInt(args[0]);
-        new EchoServer(port).start();
+        new RestartableEchoServer(port).start();
     }
 
     public void start() throws Exception {
@@ -51,7 +51,7 @@ public class EchoServer {
                 });
 
             ChannelFuture f = b.bind().sync();
-            System.out.println(EchoServer.class.getName() +
+            System.out.println(RestartableEchoServer.class.getName() +
                 " started and listening for connections on " + f.channel().localAddress());
             f.channel().closeFuture().sync();
             System.out.println("try over");
