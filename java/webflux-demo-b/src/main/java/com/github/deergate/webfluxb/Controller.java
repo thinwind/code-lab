@@ -15,28 +15,39 @@
  */
 package com.github.deergate.webfluxb;
 
-import java.util.Random;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import reactor.core.publisher.Mono;
+import com.github.deergate.netty.RestartableEchoServer;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * TODO DemoaService说明
+ * TODO Controller说明
  *
  * @author Shang Yehua <niceshang@outlook.com>
- * @since 2021-07-01  23:15
+ * @since 2021-08-02  15:23
  *
  */
-@Service
-public class DemoaService {
+@RestController
+public class Controller {
     
-    public Mono<User> getUser(ServerRequest request){
-        Random random=new Random();
-        User user=new User();
-        user.setId(Integer.parseInt(request.pathVariable("id")));
-        user.setName("User"+random.nextInt(100));
-        user.setSex(random.nextBoolean()?"女":"男");
-        return Mono.just(user);
+    RestartableEchoServer echoServer=new RestartableEchoServer(1234);
+
+    
+    @PostMapping("/start-netty")
+    public Object startNetty(){
+        echoServer.start();
+        return "OK";
+    }
+    
+    @PostMapping("/stop-netty")
+    public Object stopNetty(){
+        echoServer.stop();
+        return "OK";
+    }
+    
+    @PostMapping("/restart-netty")
+    public Object restartNetty(){
+        echoServer.reBind();
+        return "OK";
     }
 }
