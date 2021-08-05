@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Bean;
 
 @EnableBatchProcessing
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication extends Object{
 
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
@@ -26,7 +26,7 @@ public class DemoApplication {
 	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	private JobExplorer jobExplorer;
+	private JobExplorer jobExplorer,t2;
 
 	@Bean
 	public Tasklet explorerTasklet() {
