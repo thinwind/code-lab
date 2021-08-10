@@ -26,5 +26,5 @@ def clean_eclipse_file(wp):
                 clean_eclipse_file(sub_path)
 
 if __name__ == '__main__':
-    wp = '/Users/shangyehua/Codeexamples/code-lab/java/spring-batch'
+    wp = '/Users/shangyehua/opensource-projects/rocketmq'
     clean_eclipse_file(wp)
