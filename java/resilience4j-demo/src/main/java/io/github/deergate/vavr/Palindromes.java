@@ -13,7 +13,6 @@
  */
 package io.github.deergate.vavr;
 
-import java.util.Arrays;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.Seq;
