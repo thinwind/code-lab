@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        ".apt_generated_tests": true,
+        ".classpath": true,
+        ".project": true,
+        ".settings": true,
+        ".vscode":true
+    }
+}

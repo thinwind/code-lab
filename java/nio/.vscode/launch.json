@@ -1,0 +1,254 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch CharSeq",
+            "request": "launch",
+            "mainClass": "com.ronsoft.books.nio.regex.CharSeq",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch TransferToTestServer",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.selector.TransferToTestServer",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch TransferToTestClient",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.selector.TransferToTestClient",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch ConnectTestClient",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.selector.ConnectTestClient",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch ConnectTestServer",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.selector.ConnectTestServer",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch SelectorTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.selector.SelectorTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch ProviderTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.selector.ProviderTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch UdpClientTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.UdpClientTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch UdpServerTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.UdpServerTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch NagleAlgTestClient",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.NagleAlgTestClient",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch NagleAlgTestServer",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.NagleAlgTestServer",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch BindTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.BindTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClientTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.ClientTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch ServerTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.socket.ServerTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch NetInterfaceTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.NetInterfaceTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileLockInterruptTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileLockInterruptTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileLockTest2",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileLockTest2",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileLockTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileLockTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TransferFromTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.TransferFromTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FileChannelReadPosTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileChannelReadPosTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FileChannelReadTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileChannelReadTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FileChannelTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.channel.FileChannelTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CharBufferTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.CharBufferTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Byte2OthersTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.Byte2OthersTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)",
+            "request": "launch",
+            "mainClass": ""
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DirectVsHeap",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.DirectVsHeap",
+            "projectName": "nio-demo",
+            "vmArgs": "-Xmx6G -XX:+UseCompressedOops"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JvmGCTest",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.JvmGCTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "--add-exports java.base/jdk.internal.ref=ALL-UNNAMED -Xmx6G"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BufferTest<nio-demo>",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.BufferTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-DirectGCTest<nio-demo>",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.DirectGCTest",
+            "projectName": "nio-demo",
+            "vmArgs": "--add-exports java.base/jdk.internal.ref=ALL-UNNAMED"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-FlipTest<nio-demo>",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.FlipTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-LimitTest<nio-demo>",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.LimitTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-PositionTest<nio-demo>",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.PositionTest",
+            "projectName": "nio-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-RemarkTest<nio-demo>",
+            "request": "launch",
+            "mainClass": "me.shangyh.codelab.nio.RemarkTest",
+            "projectName": "nio-demo"
+        }
+    ]
+}

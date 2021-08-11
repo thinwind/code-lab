@@ -5,5 +5,4 @@ codelab.code-workspace
 .springBeans
 .apt_generated/
 .factorypath
-.vscode/
 .venv/
