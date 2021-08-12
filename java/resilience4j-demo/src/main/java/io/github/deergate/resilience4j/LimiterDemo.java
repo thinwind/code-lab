@@ -13,13 +13,11 @@
  */
 package io.github.deergate.resilience4j;
 
-import java.util.function.Consumer;
 import java.time.Duration;
 import static io.vavr.API.println;
 import io.github.resilience4j.ratelimiter.RateLimiter;
 import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
-import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.vavr.CheckedRunnable;
 import io.vavr.control.Try;
 
