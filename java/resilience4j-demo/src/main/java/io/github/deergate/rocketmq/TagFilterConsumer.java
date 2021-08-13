@@ -34,11 +34,11 @@ public class TagFilterConsumer {
 
     static RateLimiter rateLimiter() {
         int tps = 500;
-        int cycle = 10;
+        int cycle = 100;
         RateLimiterConfig config =
                 RateLimiterConfig.custom().limitRefreshPeriod(Duration.ofMillis(1000 / cycle))
                         .limitForPeriod(tps / cycle)
-                        .timeoutDuration(Duration.ofMillis(5))
+                        .timeoutDuration(Duration.ofMillis(1000))
                         .writableStackTraceEnabled(false)
                         .build();
 
@@ -59,30 +59,30 @@ public class TagFilterConsumer {
         consumer.subscribe("BatchTest", "Tag");
         // consumer.setConsumeThreadMin(2);
         // consumer.setConsumeThreadMax(4);
-        int tps = 4000;
-        int cycle = 100;
-        consumer.setPullBatchSize(tps / cycle);
-        consumer.setPullInterval(1000 / cycle);
+        // int tps = 4000;
+        // int cycle = 100;
+        // consumer.setPullBatchSize(tps / cycle);
+        // consumer.setPullInterval(1000 / cycle);
         // consumer.setPullThresholdForTopic(10);
         AtomicInteger idx = new AtomicInteger(0);
 
-        // RateLimiter rateLimiter = rateLimiter();
-        // Consumer<List<MessageExt>> msgConsumer =
-        //         RateLimiter.decorateConsumer(rateLimiter, msgs -> msgs.size(), msgs -> {
-        //             idx.incrementAndGet();
-        //             if (msgs.size() > 1) {
-        //                 System.out.printf("%s Receive New Messages: %d %n",
-        //                         Thread.currentThread().getName(), msgs.size());
-        //             }
-        //         });
+        RateLimiter rateLimiter = rateLimiter();
+        Consumer<List<MessageExt>> msgConsumer =
+                RateLimiter.decorateConsumer(rateLimiter, msgs -> msgs.size(), msgs -> {
+                    idx.incrementAndGet();
+                    if (msgs.size() > 1) {
+                        System.out.printf("%s Receive New Messages: %d %n",
+                                Thread.currentThread().getName(), msgs.size());
+                    }
+                });
 
-        Consumer<List<MessageExt>> msgConsumer = msgs -> {
-            idx.incrementAndGet();
-            if (msgs.size() > 1) {
-                System.out.printf("%s Receive New Messages: %d %n",
-                        Thread.currentThread().getName(), msgs.size());
-            }
-        };
+        // Consumer<List<MessageExt>> msgConsumer = msgs -> {
+        //     idx.incrementAndGet();
+        //     if (msgs.size() > 1) {
+        //         System.out.printf("%s Receive New Messages: %d %n",
+        //                 Thread.currentThread().getName(), msgs.size());
+        //     }
+        // };
 
         consumer.registerMessageListener(new MessageListenerConcurrently() {
 
@@ -93,7 +93,7 @@ public class TagFilterConsumer {
                     msgConsumer.accept(msgs);
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 } catch (Exception e) {
-                    // System.out.println("Exception:"+e.toString());
+                    System.out.println("Exception:"+e.toString());
                     return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
 
@@ -102,7 +102,7 @@ public class TagFilterConsumer {
         consumer.start();
         System.out.printf("Consumer Started.%n");
         long start = System.currentTimeMillis();
-        while (idx.get() < 10000) {
+        while (idx.get() < 20000) {
             Thread.sleep(3);
         }
         long end = System.currentTimeMillis();
