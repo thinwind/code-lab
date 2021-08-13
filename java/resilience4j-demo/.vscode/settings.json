@@ -4,7 +4,8 @@
         ".classpath": true,
         ".project": true,
         ".settings": true,
-        ".vscode":true
+        ".vscode":true,
+        ".factorypath":true
     },
     "java.configuration.updateBuildConfiguration": "interactive"
 }
