@@ -25,7 +25,7 @@ services:
     volumes:
       - /Users/shangyehua/tmp/data/broker/logs:/home/rocketmq/logs
       - /Users/shangyehua/tmp/data/broker/store:/home/rocketmq/store
-      - /Users/shangyehua/tmp/data/broker/conf/broker.conf:/opt/rocketmq-4.8.0-alpine/conf/broker.conf
+      - /Users/shangyehua/Codeexamples/code-lab/rocketmq/broker.conf:/opt/rocketmq-4.8.0-alpine/conf/broker.conf
     command: sh mqbroker -c /opt/rocketmq-4.8.0-alpine/conf/broker.conf
     networks:
       - common-net
