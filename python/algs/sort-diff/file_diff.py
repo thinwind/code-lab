@@ -28,12 +28,12 @@ def find_diff(left,right):
                     left_line = left_file.readline()
                 return
             
-            if left_line < right_line:
-                left_only.write(left_line)
-                left_line = left_file.readline()
-            elif left_line == right_line or left_line.strip() == right_line.strip():
+            if left_line == right_line or left_line.strip() == right_line.strip():
                 left_line = left_file.readline()
                 right_line = right_file.readline()
+            elif left_line < right_line:
+                left_only.write(left_line)
+                left_line = left_file.readline()
             else:
                 right_only.write(right_line)
                 right_line = right_file.readline()
