@@ -14,10 +14,12 @@
 package com.github.deergate.webflux;
 
 import java.util.Random;
+import java.time.Duration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 /**
  *
@@ -38,41 +40,64 @@ public class DemoaService {
 
     public Mono<User> getUser(ServerRequest request) {
         Random random = new Random();
-        return webClient.get().uri("/user/" + random.nextInt(9999) + 1).retrieve()
-                .bodyToMono(User.class).elapsed().map(t -> {
-                    System.out.println(t.getT1());
-                    return t.getT2();
-                }).map(u -> {
-                    u.setTag("Demo A");
-                    return u;
-                }).flatMap(u->{
-                    u.setId(-999);
-                    return Mono.just(u);
-                })
-                // .doOnError(e->{
-                //     System.out.println("Do 1");
-                //     e.printStackTrace();
-                // })               
-                .onErrorResume(e -> {
-                    System.out.println("ERROR1!!!");
-                    User u=new User();
-                    u.setId(-1);
-                    return Mono.just(u);
-                })
-                .onErrorResume(e -> {
-                    System.out.println("ERROR2!!!");
-                    User u=new User();
-                    u.setId(-2);
-                    return Mono.just(u);
-                })
-                .doOnError(e->{
-                    System.out.println("Do 2");
-                    e.printStackTrace();
-                }) 
-                .flatMap(u->{
-                    u.setName("final");
-                    return Mono.just(u);
-                })
-                ;
+        Retry retry = Retry.fixedDelay(3, Duration.ofMillis(20));
+        return Mono.just(123)
+                .flatMap(obj -> webClient.get().uri("/user/" + random.nextInt(9999) + 1).retrieve()
+                        .bodyToMono(User.class).elapsed().map(t -> {
+                            System.out.println(t.getT1());
+                            return t.getT2();
+                        }).map(u -> {
+                            u.setTag("Demo A");
+                            return u;
+                        }).flatMap(u -> {
+                            // u.setId(-999);
+                            return Mono.just(u);
+                        }).retryWhen(retry));
+                // .onErrorResume(e -> {;
+                //     System.out.println("[---outer error---]");
+                //     User u = new User();
+                //     u.setId(-2);
+                //     return Mono.just(u);
+                // });
+
+        // return webClient.get().uri("/user/" + random.nextInt(9999) + 1).retrieve()
+        //         .bodyToMono(User.class).elapsed().map(t -> {
+        //             System.out.println(t.getT1());
+        //             return t.getT2();
+        //         }).map(u -> {
+        //             u.setTag("Demo A");
+        //             return u;
+        //         }).flatMap(u->{
+        //             // u.setId(-999);
+        //             return Mono.just(u);
+        //         })
+        //         .retryWhen(retry)
+        //         // .doOnError(e->{
+        //         //     System.out.println("Do 1");
+        //         //     e.printStackTrace();
+        //         // })               
+        //         // .onErrorResume(e -> {
+        //         //     e.printStackTrace();
+        //         //     System.out.println("ERROR1!!!");
+        //         //     User u=new User();
+        //         //     u.setId(-1);
+        //         //     return Mono.just(u);
+        //         // })
+        //         // .onErrorResume(e -> {
+        //         //     System.out.println("ERROR2!!!");
+        //         //     User u=new User();
+        //         //     u.setId(-2);
+        //         //     return Mono.just(u);
+        //         // })
+        //         // .doOnError(e->{
+        //         //     System.out.println("Do 2");
+        //         //     e.printStackTrace();
+        //         // }) 
+
+        //         // .flatMap(u->{
+        //         //     u.setName("final");
+        //         //     return Mono.just(u);
+        //         // })
+        //         ;
     }
 }
