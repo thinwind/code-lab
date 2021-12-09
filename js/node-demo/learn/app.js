@@ -1,3 +1,19 @@
-console.log('My %s has %d years','cat',2);
+const bar = () => console.log('bar')
 
-console.log('%o',Number)
+const baz = () => console.log('baz')
+
+const foo = () => {
+  console.log('foo')
+  setTimeout(bar, 0)
+  process.nextTick(()=>{
+      console.log('tick')
+  })
+  new Promise((resolve, reject) =>
+    resolve('should be right after baz, before bar')
+  ).then(resolve => console.log(resolve))
+  baz()
+  setTimeout(bar, 0)
+  baz()
+}
+
+foo()
