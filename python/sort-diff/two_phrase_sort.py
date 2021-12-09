@@ -8,7 +8,41 @@
 '''
 
 from pathlib import Path
+import shutil
 
+def init_tmp_dir(base_dir):
+    '''
+        初始化临时目录
+        sort: 排序临时文件目录
+            将分割后的临时文件进行
+            排序生成的临时存放在此目录
+        split: 分割临时文件目录
+            将文件进行分割时，生成的
+            临时文件存放在此目录
+        merge: 合并临时文件目录
+            排序后生成的排序文件存放在
+            此目录
+    '''
+    tmp = Path(base_dir) / "tmp"
+    if not tmp.exists():
+        tmp.mkdir()
+    tmp_sort = tmp / "sort"
+    if not tmp_sort.exists():
+        tmp_sort.mkdir()
+    tmp_split = tmp / "split"
+    if not tmp_split.exists():
+        tmp_split.mkdir()
+    merge_dir = Path(base_dir) / "merge"
+    if not merge_dir.exists():
+        merge_dir.mkdir()
+
+def clean_tmp_files(base_dir):
+    '''
+        清理切割和排序生成的临时文件
+    '''
+    shutil.rmtree(Path(base_dir) / "tmp" / "sort")
+    shutil.rmtree(Path(base_dir) / "tmp" / "split")
+    
 
 def split_file(file, block_size):
     cnt = 1  # 文件数
