@@ -47,7 +47,7 @@ def clean_tmp_files(base_dir):
 def split_file(file, block_size):
     cnt = 1  # 文件数
     files = []  # 小文件目录
-    cache_size = 200
+    cache_size = 100 *1024 # 100kb
     readLines = 0
     out_file_path = Path(".") / "tmp"/"split" / f"{file}.split.{cnt}"
     out_file = open(out_file_path, 'wt')
