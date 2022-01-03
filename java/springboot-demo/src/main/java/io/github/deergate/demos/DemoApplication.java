@@ -16,9 +16,9 @@ public class DemoApplication {
     }
 
     @Bean
-    public CommandLineRunner init(@Value("${test.val:}") String val) {
+    public CommandLineRunner testDefaultVal(@Value("${some.prop.val:0.0.0.0}") String defaultPropVal) {
         return args -> {
-            System.out.println(val);
+            System.out.println(defaultPropVal);
         };
     }
 }
