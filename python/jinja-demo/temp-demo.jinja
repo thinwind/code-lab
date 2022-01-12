@@ -14,5 +14,15 @@
     {{ a_variable }}
 
     {# a comment #}
+    
+    {% for value in values %}
+    {% if loop.previtem is defined and value > loop.previtem %}
+        The value just increased!
+    {% endif %}
+    {{ value }}
+    {% if loop.nextitem is defined and loop.nextitem > value %}
+        The value will increase even more!
+    {% endif %}
+{% endfor %}
 </body>
 </html>
