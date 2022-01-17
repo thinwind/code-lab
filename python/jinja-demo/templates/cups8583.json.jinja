@@ -1,0 +1,28 @@
+{
+    "version": "1.0",
+    "lengthFieldSize":{{length_size}},
+    "lengthFieldIncluded":{{length_size_included}},
+    "header": {
+        "enabled": {{header_enabled}},
+        "outputKey": "{{header_key}}",
+        "length": {{header_length}},
+        "components": [
+            {%- for item in header_components -%}
+            {
+                "index": item,
+                "outputKey": "Field1",
+                "titleEn": "Header Length",
+                "titleZh": "头长度",
+                "length": 1,
+                "type": "b"
+            }
+            {% endfor %}
+        ]
+    },
+    "body": {
+        "outputKey":"body",
+        "fields":[
+            
+        ]
+    }
+}

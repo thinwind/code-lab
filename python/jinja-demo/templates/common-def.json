@@ -1,0 +1,98 @@
+{
+    "version": "1.0",
+    "lengthFieldSize":2,
+    "lengthFieldIncluded":true,
+    "header": {
+        "enabled": true,
+        "outputKey": "header",
+        "length": 46,
+        "components": [
+            {
+                "index": 1,
+                "outputKey": "Field1",
+                "titleEn": "Header Length",
+                "titleZh": "头长度",
+                "length": 1,
+                "type": "b"
+            },
+            {
+                "index": 2,
+                "outputKey": "Field2",
+                "titleEn": "Header Flag and Version",
+                "titleCh": "头标识和版本号",
+                "length": 1,
+                "type": "b"
+            },
+            {
+                "index": 3,
+                "outputKey": "Field3",
+                "titleEn": "Total Message Length",
+                "titleZh": "报文总长度",
+                "length": 4,
+                "type": "n"
+            },
+            {
+                "index": 4,
+                "outputKey": "Field4",
+                "titleEn": "Destination Station ID",
+                "titleZh": "目的ID",
+                "length": 11,
+                "type": "ans"
+            },
+            {
+                "index": 5,
+                "outputKey": "Field5",
+                "titleEn": "Source Station ID",
+                "titleZh": "源ID",
+                "length": 11,
+                "type": "ans"
+            },
+            {
+                "index": 6,
+                "outputKey": "Field6",
+                "titleEn": "Reserved for Use",
+                "titleZh": "保留使用",
+                "length": 3,
+                "type": "b"
+            },
+            {
+                "index": 7,
+                "outputKey": "Field7",
+                "titleEn": "Batch Number",
+                "titleZh": "批次号",
+                "length": 1,
+                "type": "b"
+            },
+            {
+                "index": 8,
+                "outputKey": "Field8",
+                "titleEn": "Transaction Information",
+                "titleZh": "交易信息",
+                "length": 8,
+                "type": "ans"
+            },
+            {
+                "index": 9,
+                "outputKey": "Field9",
+                "titleEn": "User Information",
+                "titleZh": "用户信息",
+                "length": 1,
+                "type": "b"
+            },
+            {
+                "index": 10,
+                "outputKey": "Field10",
+                "titleEn": "Reject Code",
+                "titleZh": "拒绝码",
+                "length": 5,
+                "type": "n"
+            }
+        ]
+    },
+    "body": {
+        "outputKey":"body",
+        "fields":[
+            
+        ]
+    }
+}
