@@ -7,15 +7,16 @@
         "outputKey": "{{header_key}}",
         "length": {{header_length}},
         "components": [
-            {%- for item in header_components -%}
+            {%for item in header_components -%}
             {
-                "index": item,
-                "outputKey": "Field1",
-                "titleEn": "Header Length",
-                "titleZh": "头长度",
-                "length": 1,
-                "type": "b"
-            }
+                "index": {{loop.index}},
+                "outputKey": "Field{{loop.index}}",
+                "titleEn": "{{item[0]}}",
+                "titleZh": "{{item[1]}}",
+                "length": {{item[2]}},
+                "type": "{{item[3]}}"
+            }{%- if not loop.last -%},
+            {% endif -%}
             {% endfor %}
         ]
     },
