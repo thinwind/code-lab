@@ -19,7 +19,7 @@
                 "index": 2,
                 "outputKey": "Field2",
                 "titleEn": "Header Flag and Version",
-                "titleCh": "头标识和版本号",
+                "titleZh": "头标识和版本号",
                 "length": 1,
                 "type": "b"
             },
@@ -53,7 +53,7 @@
                 "titleEn": "Reserved for Use",
                 "titleZh": "保留使用",
                 "length": 3,
-                "type": "b"
+                "type": "n"
             },
             {
                 "index": 7,
@@ -85,7 +85,7 @@
                 "titleEn": "Reject Code",
                 "titleZh": "拒绝码",
                 "length": 5,
-                "type": "n"
+                "type": "b"
             }
         ]
     },
