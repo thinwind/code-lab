@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @since 2021-09-24  14:34
  *
  */
-@Component
+// @Component
 public class SchedulerTask {
     
     @Scheduled(initialDelay = 3000,fixedDelay = 3000)

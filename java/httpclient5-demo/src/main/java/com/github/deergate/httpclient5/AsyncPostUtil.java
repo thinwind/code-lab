@@ -18,7 +18,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import org.apache.hc.client5.http.async.methods.AbstractBinResponseConsumer;
+import org.apache.hc.client5.http.async.methods.AbstractCharResponseConsumer;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleRequestProducer;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -53,11 +55,9 @@ public class AsyncPostUtil {
     public static final int RESPONSE_INIT_CAP = 1024;
 
     static {
-        RequestConfig requestConfig =
-                RequestConfig.custom()
-                .setConnectionRequestTimeout(null)
+        RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(null)
                 .setConnectTimeout(90000, TimeUnit.MICROSECONDS)
-                        .setDefaultKeepAlive(10, TimeUnit.SECONDS).build();
+                .setDefaultKeepAlive(10, TimeUnit.SECONDS).build();
         final IOReactorConfig ioReactorConfig =
                 IOReactorConfig.custom().setSoTimeout(Timeout.ofSeconds(10)).build();
         PoolingAsyncClientConnectionManager cm = new PoolingAsyncClientConnectionManager();
@@ -66,7 +66,8 @@ public class AsyncPostUtil {
         httpClient = HttpAsyncClients.custom().disableConnectionState().disableCookieManagement()
                 .disableAuthCaching().disableRedirectHandling()
                 .setDefaultRequestConfig(requestConfig).setIOReactorConfig(ioReactorConfig)
-                .setRetryStrategy(new DefaultHttpRequestRetryStrategy(3, TimeValue.ofMilliseconds(500)))
+                .setRetryStrategy(
+                        new DefaultHttpRequestRetryStrategy(3, TimeValue.ofMilliseconds(500)))
                 .setConnectionManager(cm).build();
         httpClient.start();
     }
@@ -82,10 +83,45 @@ public class AsyncPostUtil {
         return future.get();
     }
 
+    static AsyncResponseConsumer<String> responseConsumer2() {
+        return new AbstractCharResponseConsumer<String>() {
+
+            private final StringBuilder buffer = new StringBuilder(RESPONSE_INIT_CAP);
+
+            @Override
+            public void releaseResources() {
+                buffer.setLength(0);
+            }
+
+            @Override
+            protected void start(HttpResponse response, ContentType contentType)
+                    throws HttpException, IOException {
+
+            }
+
+            @Override
+            protected String buildResult() throws IOException {
+                return buffer.toString();
+            }
+
+            @Override
+            protected int capacityIncrement() {
+                return Integer.MAX_VALUE;
+            }
+
+            @Override
+            protected void data(CharBuffer src, boolean endOfStream) throws IOException {
+                buffer.append(src);
+            }
+
+
+        };
+    }
+
     static AsyncResponseConsumer<byte[]> responseConsumer() {
         return new AbstractBinResponseConsumer<byte[]>() {
             private final ByteArrayBuffer buffer = new ByteArrayBuffer(RESPONSE_INIT_CAP);
-            
+
             @Override
             public void releaseResources() {
                 buffer.clear();
