@@ -1,2 +1,6 @@
 POST /post-async HTTP/1.1
 Host: 127.0.0.1:8089
+
+###
+GET /loops?count=100 HTTP/1.1
+Host: 127.0.0.1:8089
