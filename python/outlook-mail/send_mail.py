@@ -21,7 +21,6 @@ def send_file(att_name, attachement, acc, to):
     with open(attachement, 'rb') as att:
         bdata = att.read()
         send_email(acc, att_name, att_name, [to], [(att_name, bdata)])
-        print(att_name + " has been sent.")
 
 
 def send_all_files_in_directory(acc, to, dir):
@@ -39,6 +38,7 @@ def send_all_files_in_directory(acc, to, dir):
             send_file(sub, sub_file, acc, to)
             print("==========> " + sub + " sent.")
             time.sleep(random.randint(50,120))
+    print("==========> All sent.")
 
 
 def print_dir(dir):
@@ -53,7 +53,7 @@ def print_dir(dir):
 
 
 if __name__ == '__main__':
-    base_dir = '/Users/shangyehua/Downloads/vscode-920'
+    base_dir = '/mnt/c/Users/nices/tmps/java-ext'
     account = create_account('rubbish_tin@outlook.com', 'oo00001111')
     to = 'wshangyehua@cebvendor.com'
     send_all_files_in_directory(account, to, base_dir)
