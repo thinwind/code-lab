@@ -53,7 +53,7 @@ def print_dir(dir):
 
 
 if __name__ == '__main__':
-    base_dir = '/mnt/c/Users/nices/tmps/java-ext'
+    base_dir = '/mnt/c/Users/nices/Downloads/wireshark'
     account = create_account('rubbish_tin@outlook.com', 'oo00001111')
     to = 'wshangyehua@cebvendor.com'
     send_all_files_in_directory(account, to, base_dir)
