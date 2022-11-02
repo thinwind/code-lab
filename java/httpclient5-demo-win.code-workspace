@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "httpclient5-demo"
+		},
+		{
+			"path": "springboot-demo"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}

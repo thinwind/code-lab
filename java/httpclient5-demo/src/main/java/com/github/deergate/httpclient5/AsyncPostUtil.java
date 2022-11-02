@@ -34,6 +34,7 @@ import org.apache.hc.core5.http.HttpException;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.nio.AsyncResponseConsumer;
+import org.apache.hc.core5.io.CloseMode;
 import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.util.ByteArrayBuffer;
 import org.apache.hc.core5.util.TimeValue;
@@ -68,8 +69,12 @@ public class AsyncPostUtil {
                 .setDefaultRequestConfig(requestConfig).setIOReactorConfig(ioReactorConfig)
                 .setRetryStrategy(
                         new DefaultHttpRequestRetryStrategy(3, TimeValue.ofMilliseconds(500)))
+                .setKeepAliveStrategy(null)
+                .setIoReactorExceptionCallback(null)
+                .setHttp1Config(null)
                 .setConnectionManager(cm).build();
         httpClient.start();
+        httpClient.close(CloseMode.GRACEFUL);
     }
 
     public static byte[] post(byte[] input, String url, int port)

@@ -6,7 +6,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
-import com.github.deergate.httpclient5.AsyncPostUtil;
+import com.github.deergate.httpclient5.ProdPostUtil;
 
 /**
  * Hello world!
@@ -31,7 +31,7 @@ public class App {
         }
         System.out.println("data:"+sum);
         
-        byte[] result=AsyncPostUtil.post(tests, "127.0.0.1", 8089);
+        byte[] result=ProdPostUtil.post(tests, "127.0.0.1", 8089);
         sum=0;
         for (byte b : result) {
             sum +=b;
@@ -58,7 +58,7 @@ public class App {
                 }
                 long start = System.currentTimeMillis();
                 try {
-                    byte[] result = AsyncPostUtil.post(tests, "127.0.0.1", 8089);
+                    byte[] result = ProdPostUtil.post(tests, "127.0.0.1", 8089);
                     long end = System.currentTimeMillis();
                     latch.countDown();
                     timeSpans[j]=(int) (end-start);

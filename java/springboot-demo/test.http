@@ -3,3 +3,10 @@ Host: 127.0.0.1:8089
 Content-Type: text/plain;charset=UTF-8
 
 你好,HTTP
+
+###
+POST /echo HTTP/1.1
+Host: 172.27.128.21:8089
+Content-Type: text/plain;charset=UTF-8
+
+你好,HTTP

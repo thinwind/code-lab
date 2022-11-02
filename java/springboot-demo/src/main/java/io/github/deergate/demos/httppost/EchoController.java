@@ -38,7 +38,7 @@ public class EchoController {
     @RequestMapping("/echo")
     public Object echo(@RequestBody String obj){
         try {
-            TimeUnit.MILLISECONDS.sleep(random.nextInt(200)+20);
+            TimeUnit.MILLISECONDS.sleep(random.nextInt(200)+120);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
