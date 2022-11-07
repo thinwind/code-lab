@@ -65,7 +65,7 @@ public class HttpEntityTest {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpget = new HttpGet("http://localhost/json");
 
-        HttpClientResponseHandler<String> rh = new HttpClientResponseHandler<>() {
+        HttpClientResponseHandler<String> rh = new HttpClientResponseHandler() {
 
             @Override
             public String handleResponse(final ClassicHttpResponse response) throws IOException {
