@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 1011
   servlet:
     context-path: /
   #######################################
@@ -11,7 +11,7 @@ server:
   undertow:
     threads:
       io: 2
-      worker: 12
+      worker: 8
     max-http-post-size: 500MB
     
 spring:

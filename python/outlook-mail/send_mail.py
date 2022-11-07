@@ -53,7 +53,7 @@ def print_dir(dir):
 
 
 if __name__ == '__main__':
-    base_dir = '/Users/shangyehua/Downloads/vscode-920'
+    base_dir = '/Users/shangyehua/Playground/Codeexamples/send'
     account = create_account('rubbish_tin@outlook.com', 'oo00001111')
     to = 'wshangyehua@cebvendor.com'
     send_all_files_in_directory(account, to, base_dir)
