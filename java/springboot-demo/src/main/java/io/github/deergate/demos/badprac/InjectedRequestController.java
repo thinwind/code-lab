@@ -38,10 +38,6 @@ public class InjectedRequestController {
     @Autowired
     private HttpServletRequest request;
 
-    private long stop = 10000;
-
-    private AtomicBoolean switcher = new AtomicBoolean(true);
-
     @GetMapping("/echo-param")
     public Object echo() {
         new Thread(() -> {
