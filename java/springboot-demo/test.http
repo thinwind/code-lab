@@ -15,6 +15,14 @@ Content-Type: text/plain;charset=UTF-8
 GET /echo-param?param=val1 HTTP/1.1
 Host: 127.0.0.1:1011
 
+### echo param1
+GET /echo-param1?param=val2 HTTP/1.1
+Host: 127.0.0.1:1011
+
 ### echo param2
 GET /echo-param2?param=val2 HTTP/1.1
+Host: 127.0.0.1:1011
+
+### echo param3
+GET /echo-param3?param=val3 HTTP/1.1
 Host: 127.0.0.1:1011

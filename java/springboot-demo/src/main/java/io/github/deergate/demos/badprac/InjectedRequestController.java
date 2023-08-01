@@ -15,6 +15,9 @@
  */
 package io.github.deergate.demos.badprac;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.http.HttpServlet;
@@ -47,6 +50,19 @@ public class InjectedRequestController {
         return request.getParameter("param");
     }
 
+    @GetMapping("/echo-param1")
+    public Object echo1() {
+        var list = new ArrayList<>();
+        list.add("prefix1");
+        list.add("prefix2");
+        list.add("prefix3");
+        var result = new CopyOnWriteArrayList<>();
+        list.parallelStream().forEach((e) -> {
+            result.add(e + request.getParameter("param"));
+        });
+        return result;
+    }
+
     @GetMapping("/echo-param2")
     public Object echo2(HttpServletRequest request2) {
         new Thread(() -> {
@@ -54,5 +70,18 @@ public class InjectedRequestController {
         }).start();
 
         return request2.getParameter("param");
+    }
+
+    @GetMapping("/echo-param3")
+    public Object echo3(HttpServletRequest request3) {
+        var list = new ArrayList<>();
+        list.add("prefix1");
+        list.add("prefix2");
+        list.add("prefix3");
+        var result = new CopyOnWriteArrayList<>();
+        list.parallelStream().forEach((e) -> {
+            result.add(e + request3.getParameter("param"));
+        });
+        return result;
     }
 }
