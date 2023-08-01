@@ -10,3 +10,11 @@ Host: 172.27.128.21:8089
 Content-Type: text/plain;charset=UTF-8
 
 你好,HTTP
+
+### echo param
+GET /echo-param?param=val1 HTTP/1.1
+Host: 127.0.0.1:1011
+
+### echo param2
+GET /echo-param2?param=val2 HTTP/1.1
+Host: 127.0.0.1:1011
