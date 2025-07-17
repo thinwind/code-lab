@@ -1,0 +1,60 @@
+{%- macro render_field(field) -%}
+    {
+        "index": {{field.index}},
+        "outputKey": "{{field.output_key}}",
+        "titleEn": "{{field.title[0]}}",
+        "titleZh": "{{field.title[1]}}",
+        {% if not field.tv -%}
+        {% if field.fixed -%}
+        "fixed": true,
+        "length": {{field.length}},
+        {% else -%}
+        "fixed": false,
+        {% if not field.tlv -%}
+        "lengthSize": {{field.length_size}},
+        "maxLength": {{field.max_length}},
+        {% endif -%}
+        {% endif -%}
+        {% endif -%}
+        "type": "{{field.type}}",
+        "valueType": "{{field.val_type}}",
+        "predefinedUsageOnly":{{field.predifined_usage_only}}{%- if field.usages %},
+        "usages":{
+                {% for usage in field.usages -%}
+                "{{usage['tag']}}":{{render_field(usage['field'])}}{%- if not loop.last -%},
+                {%- endif -%}
+                {% endfor %}
+        }
+        {%- endif %}
+    }
+{%- endmacro -%}
+
+{%- macro render_fields(key,sub_fields) -%}
+    "{{key}}":[
+        {% for sub_field in sub_fields -%}
+        {{render_field(sub_field)}}{%- if not loop.last -%},
+        {%- endif -%}
+        {% endfor %}
+    ]
+{%- endmacro -%}
+{
+    "version": "1.0",
+    "upwardCharset":"GB18030",
+    "downwardCharset":"UTF-8",
+    "traceIdOutputKey":"traceId",
+    "mtiOutputKey":"ecommMsgTypeId",
+    "macOutputKey":"messageMacB",
+    "channelOutputKey":"ecommChannelSrc",
+    "channelOutputValue":"P",
+    "channel": "EBIP",
+    "lengthFieldSize":{{length_size}},
+    "lengthFieldIncluded":{{length_size_included}},
+    "header": {
+        "enabled": {{header_enabled}},
+        "outputKey": "{{header_key}}"
+    },
+    "body": {
+        "outputKey":"{{body_key}}",
+        {{render_fields("fields",body_components)}}
+    }
+}
